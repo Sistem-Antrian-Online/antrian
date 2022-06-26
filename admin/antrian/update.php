@@ -8,7 +8,7 @@ $waktu = $_POST['waktu'];
 $status = $_POST['status'];
 $id_poli = $_POST['id_poli'];
 
-$query = mysqli_query($connection, "UPDATE antrian SET no_antrian='$no_antrian', kode_waktu = '$waktu', status = '$status', id_poli = '$id_poli' WHERE id='$id'");
+$query = mysqli_query($connection, "UPDATE antrian SET no_antrian='$no_antrian', waktu = '$waktu', status = '$status', id_poli = '$id_poli' WHERE id='$id'");
 
 if ($query) {
   $_SESSION['info'] = [

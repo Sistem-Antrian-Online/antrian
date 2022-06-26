@@ -35,7 +35,14 @@ $query = mysqli_query($connection, "SELECT * FROM antrian WHERE id='$id'");
                 </tr>
                 <tr>
                   <td>Status</td>
-                  <td><input class="form-control" type="text" name="status" required value="<?= $row['status'] ?>"></td>
+                  <td>
+                    <select class="form-control" name="status" id="status" required>
+                      <option value="Belum">--Pilih Status--</option>
+                      <option value="Sudah">Sudah</option>
+                      <option value="Proses">Proses</option>
+                      <option value="Belum">Belum</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td>Poli</td>

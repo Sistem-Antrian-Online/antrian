@@ -9,7 +9,7 @@ $poli = mysqli_query($connection, "SELECT a.*, p.nama AS nama_poli FROM antrian 
 <section class="section">
   <div class="section-header d-flex justify-content-between">
     <h1>Antrian Poli</h1>
-    <a href="./create_mata.php" class="btn btn-primary">Tambah Data</a>
+    <a href="./antripoli.php" class="btn btn-primary">Tambah Data</a>
   </div>
   <div class="row">
     <div class="col-12">

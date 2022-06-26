@@ -1,19 +1,37 @@
 <?php
-require_once 'helper/connection.php';
-session_start();
-if (isset($_POST['submit'])) {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  require_once 'helper/connection.php';
+  session_start();
+  
+  if (isset($_POST['submit'])) {
+    function validate($data) {
+      $data = trim($data);
+      $data =  stripslashes($data);
+      $data = htmlspecialchars($data);
 
-  $sql = "SELECT * FROM users WHERE username='$username' and password='$password' LIMIT 1";
-  $result = mysqli_query($connection, $sql);
+      return $data;
+    }
+    
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-  $row = mysqli_fetch_assoc($result);
-  if ($row) {
-    $_SESSION['login'] = $row;
-    header('Location: index.php');
+    if(empty($username)) {
+      header('Location: login.php?error=username is reqiured!');
+      exit();
+    } else if(empty($password)) {
+      header('Location: login.php?error=password is required!');
+      exit();      
+    } else {
+      $sql = "SELECT * FROM users WHERE username='$username' and password='$password' LIMIT 1";
+      $result = mysqli_query($connection, $sql);
+
+      $row = mysqli_fetch_assoc($result);
+      if ($row) {
+          $_SESSION['login'] = $row;
+          header('Location: index.php');
+      }
+    }
+
   }
-}
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +52,16 @@ if (isset($_POST['submit'])) {
   <!-- Template CSS -->
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    .error {
+      width: 100%;
+      background: #f2dede;
+      color: #a94442;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -51,44 +79,51 @@ if (isset($_POST['submit'])) {
                 <h4>Login Admin</h4>
               </div>
 
+              <!-- class="needs-validation " -->
               <div class="card-body">
-                <form method="POST" action="" class="needs-validation" novalidate="">
-                  <div class="form-group">
-                    <label for="username">Username</label>
-                    <input id="username" type="text" class="form-control" name="username" tabindex="1" required autofocus>
-                    <div class="invalid-feedback">
-                      Mohon isi username
+                <?php if(isset($_GET['error'])) {?>
+                    <p class="error"><?php echo $_GET['error']; ?></p>
+                <?php } ?>
+                <form method="POST" action="">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input id="username" type="text" class="form-control" name="username" tabindex="1" autofocus>
+                      <!-- <div class="invalid-feedback"> -->
+                        <!-- Mohon isi username -->
+                      <!-- </div> -->
+                      <p id="errorUsername" style="color: red;"></p>
                     </div>
-                  </div>
 
-                  <div class="form-group">
-                    <div class="d-block">
-                      <label for="password" class="control-label">Password</label>
+                    <div class="form-group">
+                      <div class="d-block">
+                        <label for="password" class="control-label">Password</label>
+                      </div>
+                      <input id="password" type="password" class="form-control" name="password" tabindex="2" >
+                      <div class="invalid-feedback">
+                        <!-- Mohon isi kata sandi -->
+                      </div>
+                      <p id="errorPassword" style="color: red;"></p>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
-                    <div class="invalid-feedback">
-                      Mohon isi kata sandi
-                    </div>
-                  </div>
 
-                  <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                      <label class="custom-control-label" for="remember-me">Ingat Saya</label>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                        <label class="custom-control-label" for="remember-me">Ingat Saya</label>
+                      </div>
                     </div>
-                  </div>
-
-                  <div class="form-group">
-                    <button name="submit" type="submit" class="btn btn-primary btn-lg btn-block" tabindex="3">
-                      Login
-                    </button>
-                  </div>
+      
+                    <div class="form-group">
+                      <button type="submit" name="submit"  class="btn btn-primary btn-lg btn-block" tabindex="3">
+                        Login
+                      </button>
+                    </div>
+                  
                 </form>
 
               </div>
             </div>
             <div class="simple-footer">
-              Copyright &copy; Heri Hermawan 2021
+              Copyright &copy; Sistem Antrian Online
             </div>
           </div>
         </div>
@@ -109,6 +144,37 @@ if (isset($_POST['submit'])) {
   <!-- Template JS File -->
   <script src="../assets/js/scripts.js"></script>
   <script src="../assets/js/custom.js"></script>
+  <!-- <script>
+
+    let form = document.getElementById('myForm');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    var errorUsername = document.getElementById('errorUsername');
+    var errorPassword = document.getElementById('errorPassword');
+
+    username.addEventListener('keyup', function(){
+      errorUsername.innerHTML = '';
+    })
+
+    password.addEventListener('keyup', function(){
+      errorPassword.innerHTML = '';
+    })
+
+    form.addEventListener('click', () => {
+      // setTimeout(e.preventDefault(), 500);
+      if((username.value == null  || username.value == '')  &&  (password.value == null  || password.value == '')) {
+        errorUsername.innerHTML = 'username harap diisi!';
+        errorPassword.innerHTML = 'password harap diisi!';
+      }else if(password.value.length < 5) {
+        errorPassword.innerHTML = 'password minimal 6 charater';
+      }
+    })
+
+    
+
+
+
+  </script> -->
 
   <!-- Page Specific JS File -->
 </body>
