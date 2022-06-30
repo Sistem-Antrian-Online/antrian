@@ -6,13 +6,8 @@
   $jam = date("Y-m-d H:i:s");
   $sql = "INSERT INTO antrian (no_antrian, waktu, status, id_poli) VALUES ('$noantri','$jam','Belum','$id')";
   $hasil = mysqli_query($connection, $sql);
-  // if($hasil){
-  //   echo "1";
-  // }else{
-  //   echo "0";
-  // }
-
-  
-  
-
-?>
+  if($hasil){
+    echo "1";
+  }else{
+    echo "0";
+  }

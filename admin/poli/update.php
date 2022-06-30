@@ -2,7 +2,7 @@
 session_start();
 require_once '../helper/connection.php';
 
-$id_poli = $_POST['id_poli'];
+$id_poli = $_GET['id_poli'];
 $nama = $_POST['nama'];
 $deskripsi = $_POST['deskripsi'];
 $loket = $_POST['loket'];

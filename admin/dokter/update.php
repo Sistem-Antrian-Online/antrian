@@ -2,7 +2,7 @@
 session_start();
 require_once '../helper/connection.php';
 
-$id_dokter = $_POST['id_dokter'];
+$id_dokter = $_GET['id_dokter'];
 $nama = $_POST['nama'];
 $jk = $_POST['jk'];
 $spesialis = $_POST['spesialis'];

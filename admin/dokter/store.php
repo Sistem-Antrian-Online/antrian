@@ -2,12 +2,16 @@
 session_start();
 require_once '../helper/connection.php';
 
-$id_dokter = $_POST['id_dokter'];
+$result = mysqli_query($connection, "SELECT COUNT(*) as jumlah FROM dokter");
+$row = mysqli_fetch_assoc($result);
+$count = $row['jumlah'];
+$no = (int)$count + 1;
+
 $nama = $_POST['nama'];
 $jk = $_POST['jk'];
 $spesialis = $_POST['spesialis'];
 
-$query = mysqli_query($connection, "insert into dokter(id_dokter, nama, jk, spesialis) value('$id_dokter', '$nama', '$jk', '$spesialis')");
+$query = mysqli_query($connection, "insert into dokter(id_dokter, nama, jk, spesialis) value('$no', '$nama', '$jk', '$spesialis')");
 if ($query) {
   $_SESSION['info'] = [
     'status' => 'success',
