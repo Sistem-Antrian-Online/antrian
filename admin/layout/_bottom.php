@@ -45,7 +45,7 @@
 <script>
 function InputWord(evt) {
     var key = String.fromCharCode(evt.which);
-    if (!(/^[a-zA-Z ]+$/.test(key))) {
+    if (!(/^[a-zA-Z .]+$/.test(key))) {
         evt.preventDefault();
     }
 }
