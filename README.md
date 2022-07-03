@@ -1,2 +1,2 @@
 # antrian
-Mayan 60% wesan
+Yok bisa yok
