@@ -2,7 +2,7 @@
 session_start();
 require_once '../helper/connection.php';
 
-$id = $_POST['id'];
+$id = $_GET['id'];
 $nama = $_POST['nama'];
 $username = $_POST['username'];
 $password = $_POST['password'];

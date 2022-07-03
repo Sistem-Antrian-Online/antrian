@@ -28,26 +28,25 @@ require_once '../../admin/helper/connection.php';
                 }
 
                 $no_antrianpoli = $huruf . $addNol . $incrementKode;
-
             ?>
             <div class="col text-center">
-                <a href="cetak.php?poli=<?php echo $nama; ?>&antrian=<?php echo $no_antrianpoli; ?>&loket=<?php echo $huruf; ?>"
-                    target="myWindow"
-                    onclick="var w=window.open(this.href,this.target,'height=600,width=800'); return w? false:true"
-                    style="text-decoration: none;">
-                    <div class="card text-bg-success mb-3 " style="width: 275px;height: 200px; cursor: pointer;"
-                        onclick="update(this)" data-idpoli="<?= $idpoli; ?>" data-loket="<?= $huruf; ?>"
-                        data-nama="<?= $nama; ?>" data-antrian="<?= $no_antrianpoli; ?>">
-                        <div class="card-header d-flex justify-content-center align-items-center">
-                            <h4 class="card-title text-uppercase" id="">Poli <?= $nama; ?></h4>
-                        </div>
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <br>
-                            <h4 class="card-title text-uppercase" id=""><?= $no_antrianpoli; ?></h4>
-                        </div>
+                <!-- <a href="cetak.php?poli=<?php echo $nama; ?>&antrian=<?php echo $no_antrianpoli; ?>&loket=<?php echo $huruf; ?>"
+                target="_blank" style="text-decoration: none;"> -->
+                <div class="card text-bg-success mb-3 " style="width: 275px;height: 200px; cursor: pointer;"
+                    onclick="update(this)" data-idpoli="<?= $idpoli; ?>" data-loket="<?= $huruf; ?>"
+                    data-nama="<?= $nama; ?>" data-antrian="<?= $no_antrianpoli; ?>">
+                    <div class="card-header d-flex justify-content-center align-items-center">
+                        <h4 class="card-title text-uppercase" id="">Poli <?= $nama; ?></h4>
                     </div>
-                </a>
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                        <br>
+                        <h4 class="card-title text-uppercase" id=""><?= $no_antrianpoli; ?></h4>
+                    </div>
+
+                </div>
+                <!-- </a> -->
             </div>
+
             <?php
             }
             ?>
@@ -77,54 +76,80 @@ function update(el) {
     let noantri = $(el).data("antrian");
     let loket = $(el).data("loket");
     let poli = $(el).data("nama");
-    $.ajax({
-        url: "create.php",
-        method: "POST",
-        data: {
-            id: id,
-            noantri: noantri
-        },
-        cache: "false",
-        success: function(y) {
-            if (y == 1) {
-                db.ref("antrian/" + id).set({
-                    no_antrian: noantri,
-                    nama: poli,
-                    loket: loket
-                }, (error) => {
-                    if (error) {
-                        alert("Gagal");
-                    } else {
-                        alert("Berhasil");
-                        window.location = "";
-                    }
+
+    if (confirm('Yakin?') == true) {
+        $.ajax({
+            url: "create.php",
+            method: "POST",
+            data: {
+                id: id,
+                noantri: noantri
+            },
+            cache: "false",
+            success: function(y) {
+                window.open(`cetak.php?poli=${poli}&antri=${noantri}&loket=${loket}`, 'print karcis',
+                    "width=500,height=500");
+            },
+            error: function() {
+                swal({
+                    title: "Gagal",
+                    text: "API Tidak Terhubung",
+                    icon: "error"
                 });
-            } else {
-                alert("sistem error");
             }
-        },
-        error: function() {
-            swal({
-                title: "Gagal",
-                text: "API Tidak Terhubung",
-                icon: "error"
-            });
-        }
-    })
-
-
-
-
-    // db.ref("antrian/" + id).set({
-    //     no_antrian: noantri,
-    //     nama: poli,
-    //     loket: loket
-    // }, (error) => {
-    //     if (error) {
-    //         alert("Gagal");
-    //     } else {
-    //         alert("Berhasil");
-    //     }
-    // });
+        })
+    } else {
+        alert('tidak jadi cetak nomor antrian')
+    }
 }
+
+// function update(el) {
+//     let id = $(el).data("idpoli");
+//     let noantri = $(el).data("antrian");
+//     let loket = $(el).data("loket");
+//     let poli = $(el).data("nama");
+//     // if(confirm('Yakin?') == true) {
+//         $.ajax({
+//             url: "create.php",
+//             method: "POST",
+//             data: {id: id, noantri: noantri},
+//             cache: "false", 
+//             success: function(y){
+//                 // if(y == 1){
+//                 //     db.ref("antrian/" + id).set({
+//                 //         no_antrian: noantri,
+//                 //         nama: poli,
+//                 //         loket: loket
+//                 //     }, (error) => {
+//                 //         if (error) {
+//                 //             alert("Gagal");
+//                 //         } else {
+//                 //             alert("Berhasil");
+//                 //             window.location = "";
+//                 //         }
+//                 //     });
+//                 // }else{
+//                 //     alert("sistem error");
+//                 // }  
+//                 alert('berhasail menambahkan');     
+//             },
+//             error: function(){
+//                 swal({title: "Gagal", text: "API Tidak Terhubung", icon: "error"});
+//             }
+//         })
+//     // }  else {
+//     //     return false;
+//     // }
+//     // db.ref("antrian/" + id).set({
+//     //     no_antrian: noantri,
+//     //     nama: poli,
+//     //     loket: loket
+//     // }, (error) => {
+//     //     if (error) {
+//     //         alert("Gagal");
+//     //     } else {
+//     //         alert("Berhasil");
+//     //     }
+//     // });
+// }
 </script>
