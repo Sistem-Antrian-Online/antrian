@@ -32,8 +32,8 @@ require_once '../../admin/helper/connection.php';
             ?>
             <div class="col text-center">
                 <div class="card text-bg-success mb-3 " style="width: 275px;height: 200px; cursor: pointer;"
-                    onclick="update(this)" data-idpoli="<?= $idpoli; ?>" data-loket="<?= $huruf; ?>"
-                    data-nama="<?= $nama; ?>" data-antrian="<?= $no_antrianpoli; ?>">
+                    data-idpoli="<?= $idpoli; ?>" data-loket="<?= $huruf; ?>" data-nama="<?= $nama; ?>"
+                    data-antrian="<?= $no_antrianpoli; ?>" id="card-poli" onclick="update(this)">
                     <div class="card-header d-flex justify-content-center align-items-center">
                         <h4 class="card-title text-uppercase" id="">Poli <?= $nama; ?></h4>
                     </div>
@@ -68,49 +68,58 @@ var db = firebase.database();
 var antrianFR = db.ref("antrian");
 
 function update(el) {
+    date_check = new Date();
     let id = $(el).data("idpoli");
     let noantri = $(el).data("antrian");
     let loket = $(el).data("loket");
     let poli = $(el).data("nama");
 
-
-    if (confirm('Yakin?') == true) {
-        $.ajax({
-            url: "create.php",
-            method: "POST",
-            data: {
-                id: id,
-                noantri: noantri
-            },
-            cache: "false",
-            success: function(y) {
-                if (y == 1) {
-                    db.ref("antrian/" + id).set({
-                        no_antrian: noantri,
-                        nama: poli,
-                        loket: loket
-                    }, (error) => {
-                        if (error) {
-                            alert("Gagal");
-                        } else {
-                            window.open(`cetak.php?poli=${poli}&antri=${noantri}&loket=${loket}`,
-                                'print karcis',
-                                "width=500,height=500");
-                            window.location = "";
-                        }
+    if (date_check.getHours() >= "7" && date_check.getHours() <= "11") {
+        if (confirm('Yakin?') == true) {
+            $.ajax({
+                url: "create.php",
+                method: "POST",
+                data: {
+                    id: id,
+                    noantri: noantri
+                },
+                cache: "false",
+                success: function(y) {
+                    if (y == 1) {
+                        db.ref("antrian/" + id).set({
+                            no_antrian: noantri,
+                            nama: poli,
+                            loket: loket
+                        }, (error) => {
+                            if (error) {
+                                alert("Gagal");
+                            } else {
+                                window.open(
+                                    `cetak.php?poli=${poli}&antri=${noantri}&loket=${loket}`,
+                                    'print karcis',
+                                    "width=500,height=500");
+                                window.location = "";
+                            }
+                        });
+                    } else {
+                        alert("sistem error");
+                    }
+                },
+                error: function() {
+                    swal({
+                        title: "Gagal",
+                        text: "API Tidak Terhubung",
+                        icon: "error"
                     });
-                } else {
-                    alert("sistem error");
                 }
-            },
-            error: function() {
-                swal({
-                    title: "Gagal",
-                    text: "API Tidak Terhubung",
-                    icon: "error"
-                });
-            }
-        })
+            })
+        }
+    } else {
+        Swal.fire(
+            'Maaf Sudah Tutup!',
+            "Silahkan Kembali Besok",
+            'error'
+        )
     }
 }
 
@@ -122,6 +131,7 @@ function showTime() {
     let year = date.getYear();
     let month = date.getMonth();
     let Hari = hari[day];
+    let Tanggal = date.getDate().toString();
     let Bulan = bulan[month];
     let Tahun = (year < 1000) ? year + 1900 : year;
     var h = date.getHours(); // 0 - 23
@@ -137,15 +147,22 @@ function showTime() {
         session = "PM";
     }
 
+    if (Tanggal.length == 1) {
+        Tanggal = "0" + Tanggal;
+    }
+
     h = (h < 10) ? "0" + h : h;
     m = (m < 10) ? "0" + m : m;
     s = (s < 10) ? "0" + s : s;
     var time = h + ":" + m + ":" + s + " " + session;
 
     // console.log(Hari+", "+day+' '+Bulan+" "+Tahun+" "+time);
-    let hariTgl = Hari + ", " + day + ' ' + Bulan + " " + Tahun + " " + time;
+    let hariTgl = Hari + ", " + Tanggal + ' ' + Bulan + " " + Tahun + " " + time;
     $('.waktu-tgl').html(hariTgl);
     setTimeout(showTime, 1000);
 }
-showTime()
+showTime();
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
