@@ -21,19 +21,29 @@ $result = mysqli_query($connection, "SELECT * FROM users");
                   <th>No</th>
                   <th>Nama</th>
                   <th>Username</th>
+                  <th>level</th>
                   <th style="width: 150">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                 $no = 1;
+                $alias;
                 while ($data = mysqli_fetch_array($result)) :
+                  if ($data['level'] == 1) {
+                    $alias = "Admin";
+                  } else if ($data['level'] == 2) {
+                    $alias = "Asisten Dokter";
+                  } else {
+                    $alias = "Tidak Terdaftar";
+                  }
                 ?>
 
                   <tr class="text-center">
                     <td><?= $no ?></td>
                     <td><?= $data['nama'] ?></td>
                     <td><?= $data['username'] ?></td>
+                    <td><?= $alias ?></td>
                     <td>
                       <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?id=<?= $data['id'] ?>">
                         <i class="fas fa-trash fa-fw"></i>

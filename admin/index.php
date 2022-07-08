@@ -25,6 +25,18 @@
       border-radius: 5px;
       font-size: 1.2rem;
     }
+
+    #input-password {
+      position: relative;
+    }
+
+    #input-password i {
+      position: absolute;
+      top: 2.5rem;
+      /* left: 1rem; */
+      right: 15px;
+      font-size: 1.2rem;
+    }
   </style>
 </head>
 
@@ -45,13 +57,9 @@
 
               <!-- class="needs-validation " -->
               <div class="card-body">
-                <?php
-                if (isset($_GET['pesan'])) {
-                  if ($_GET['pesan'] == "gagal") {
-                    echo "<div class='alert'>Username dan Password tidak sesuai !</div>";
-                  }
-                }
-
+                <?php if (isset($_GET['pesan'])) { ?>
+                  <p class="error" style="text-align: center;"><?php echo $_GET['pesan']; ?></p>
+                <?php }
                 ?>
                 <form method="POST" action="login.php">
                   <div class="form-group">

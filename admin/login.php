@@ -10,58 +10,29 @@ $row = mysqli_num_rows($result);
 
 if ($row > 0) {
     $data = mysqli_fetch_assoc($result);
-    $tingkat = $data['level_users'];
+    $nama = $data['nama'];
+    $tingkat = $data['level'];
     // row jika user login sebagai admin
-    if ($data['level_users'] == "admin") {
-
+    if ($data['level'] == "1") {
         // buat session login dan username
+        $_SESSION['nama'] = $nama;
         $_SESSION['username'] = $username;
-        $_SESSION['level_users'] = $tingkat;
+        $_SESSION['level'] = $tingkat;
         // alihkan ke halaman dashboard admin
         header("location:dashboard/index.php");
 
-        // row jika user login sebagai pegawai
-    } else if ($data['level_users'] == "1") {
+        // row jika user login sebagai asdok
+    } else if ($data['level'] == "2") {
         // buat session login dan username
+        $_SESSION['nama'] = $nama;
         $_SESSION['username'] = $username;
-        $_SESSION['level_users'] = $tingkat;
-        // alihkan ke halaman dashboard pegawai
+        $_SESSION['level'] = $tingkat;
+        // alihkan ke halaman dashboard asdok
         header("location:dashboard/index.php");
-
-        // row jika user login sebagai pengurus
-        // } else if ($data['level_users'] == "2") {
-        //     // buat session login dan username
-        //     $_SESSION['username'] = $username;
-        //     $_SESSION['level_users'] = "2";
-        //     // alihkan ke halaman dashboard pengurus
-        //     header("location:halaman_pengurus.php");
     } else {
-
         // alihkan ke halaman login kembali
-        header("location:index.php?pesan=gagal");
+        header("location:index.php?pesan=Akun Tidak Terdaftar !");
     }
 } else {
-    header("location:index.php?pesan=gagal");
+    header("location:index.php?pesan=Akun Tidak Terdaftar !");
 }
-
-// if ($row['level_users_users'] == 1) {
-//     print("Dokter");
-// } else if ($row['level_users_users'] != 0) {
-//     print("Admin");
-// } else {
-//     print("Data Tidak Ditemukan");
-//     header('Location: index.php');
-// }
-
-// if ($row) {
-//   $_SESSION['login'] = $row;
-//   header('Location: coba.php');
-// }
-
-
-// session_start();
-// if (isset($_SESSION['login'])) {
-//   header('Location: dashboard/index.php');
-// } else {
-//   header('Location: ./login.php');
-// }

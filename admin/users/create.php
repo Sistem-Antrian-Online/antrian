@@ -17,13 +17,11 @@ require_once '../helper/connection.php';
                         <table cellpadding="8" class="w-100">
                             <tr>
                                 <td>Nama User</td>
-                                <td><input class="form-control" type="text" name="nama" onkeypress="InputWord(event)"
-                                        required></td>
+                                <td><input class="form-control" type="text" name="nama" onkeypress="InputWord(event)" required></td>
                             </tr>
                             <tr>
                                 <td>Username</td>
-                                <td><input class="form-control" type="text" name="username"
-                                        onkeypress="InputWord(event)" required></td>
+                                <td><input class="form-control" type="text" name="username" onkeypress="InputWord(event)" required></td>
                             </tr>
                             <tr>
                             <tr>
@@ -34,10 +32,10 @@ require_once '../helper/connection.php';
                             <tr>
                                 <td>Level User</td>
                                 <td>
-                                    <select class="form-control" name="level_users" id="level_users" required>
+                                    <select class="form-control" name="level" id="level" required>
                                         <option value="">--Pilih Level User--</option>
                                         <option value="1">Administrator</option>
-                                        <option value="2">Pegawai</option>
+                                        <option value="2">Asisten Dokter</option>
                                     </select>
                                 </td>
                             </tr>

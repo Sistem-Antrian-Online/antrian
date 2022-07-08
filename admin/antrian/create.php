@@ -12,10 +12,9 @@ if (mysqli_num_rows($poli) > 0) {
 } else {
   echo "0 results";
 }
-$query = mysqli_query($connection, "SELECT max(no_antrian) as no_antrianTerbesar FROM antrian WHERE no_antrian LIKE '$huruf%'");
+$query = mysqli_query($connection, "SELECT max(no_antrian) as no_antrianTerbesar FROM antrian WHERE no_antrian LIKE '$huruf%' AND waktu == NOW()");
 $data = mysqli_fetch_array($query);
 $no_antrianpoli = $data['no_antrianTerbesar'];
-
 // mengambil angka dari no_antrian barang terbesar, menggunakan fungsi substr
 // dan diubah ke integer dengan (int)
 $urutan = (int) substr($no_antrianpoli, 1, 3);

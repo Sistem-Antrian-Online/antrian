@@ -6,9 +6,9 @@ $id = $_GET['id'];
 $nama = $_POST['nama'];
 $username = $_POST['username'];
 $password = $_POST['password'];
-$level_users = $_POST['level_users'];
+$level = $_POST['level'];
 
-$query = mysqli_query($connection, "UPDATE users SET nama = '$nama', username = '$username', password = '$password', level_users = '$level_users' WHERE id = '$id'");
+$query = mysqli_query($connection, "UPDATE users SET nama = '$nama', username = '$username', password = '$password', level = '$level' WHERE id = '$id'");
 if ($query) {
   $_SESSION['info'] = [
     'status' => 'success',
