@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#fff" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:" />
+    <title>Framework7 Nih Bos</title>
+    <link rel="stylesheet" href="node_modules/framework7/framework7-bundle.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="apple-touch-icon" href="img/f7-icon-square.png" />
+    <link rel="icon" href="img/f7-icon.png" />
+    <!-- link css custom -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/"></div>
+    </div>
+    <script src="node_modules/framework7/framework7-bundle.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBcj1h4Z0EHIYyuh9dEzbLnrfhnuvCUOaI",
+        authDomain: "antrian-online-97d3b.firebaseapp.com",
+        projectId: "antrian-online-97d3b",
+        storageBucket: "antrian-online-97d3b.appspot.com",
+        messagingSenderId: "933345432664",
+        appId: "1:933345432664:web:fa8d54fdcb900c168de62d",
+        measurementId: "G-VDK4EVDDZX",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var db = firebase.database();
+      var antrianFR = db.ref("antrian_dilayani");
+
+      // baca data firebase
+      antrianFR.on("value", bacaData);
+
+      function bacaData(snap) {
+        let hasil = "";
+        snap.forEach((kolom) => {
+          let loket = kolom.val().loket;
+          let poli = kolom.val().nama_poli;
+          let nomor = kolom.val().nomor_dilayani;
+          let nomor_selanjutnya = kolom.val().nomor_selanjutnya;
+          let status = kolom.val().status;
+
+          hasil +=
+            "<a href='#' style='text-align: center; font-wight: bold; color: #000;' data-loket=" +
+            loket +
+            " data-poli='" +
+            poli +
+            "' data-nomor1='" +
+            nomor +
+            "' data-nomor2='" +
+            nomor_selanjutnya +
+            "' data-status='" +
+            status +
+            "' onclick='detailAntrian(this)' class='col-50'><div class='card'><div class='card-header'>" +
+            poli +
+            "</div><div class='card-content' style='padding: 2rem 0; font-size: 1.8rem;'>" +
+            nomor +
+            "</div><div class='card-footer' >" +
+            status +
+            "</div></div></a>";
+        });
+
+        $(".data-antrian").html(hasil);
+      }
+
+      function detailAntrian(el) {
+        let loket = $(el).data("loket");
+        let poli = $(el).data("poli");
+        let nomor1 = $(el).data("nomor1"); // nomor dilayani
+        let nomor2 = $(el).data("nomor2"); // nomor selanjutnya
+        let status = $(el).data("status");
+
+        app.views.main.router.navigate("/detailantrian/?loket=" + loket + "&poli=" + poli + "&nomor1=" + nomor1 + "&nomor2=" + nomor2 + "&status=" + status);
+      }
+    </script>
+  </body>
+</html>

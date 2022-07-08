@@ -1,194 +1,67 @@
 <?php
-require_once 'helper/connection.php';
 session_start();
+include 'helper/connection.php';
+$username = $_POST['username'];
+$password = $_POST['password'];
 
-if (isset($_POST['submit'])) {
-  function validate($data)
-  {
-    $data = trim($data);
-    $data =  stripslashes($data);
-    $data = htmlspecialchars($data);
+$sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+$result = mysqli_query($connection, $sql);
+$row = mysqli_num_rows($result);
 
-    return $data;
-  }
+if ($row > 0) {
+    $data = mysqli_fetch_assoc($result);
+    $tingkat = $data['level_users'];
+    // row jika user login sebagai admin
+    if ($data['level_users'] == "admin") {
 
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+        // buat session login dan username
+        $_SESSION['username'] = $username;
+        $_SESSION['level_users'] = $tingkat;
+        // alihkan ke halaman dashboard admin
+        header("location:dashboard/index.php");
 
-  if (empty($username)) {
-    header('Location: login.php?error=username is reqiured!');
-    exit();
-  } else if (empty($password)) {
-    header('Location: login.php?error=password is required!');
-    exit();
-  } else {
-    $sql = "SELECT * FROM users WHERE username='$username' and password='$password' LIMIT 1";
-    $result = mysqli_query($connection, $sql);
+        // row jika user login sebagai pegawai
+    } else if ($data['level_users'] == "1") {
+        // buat session login dan username
+        $_SESSION['username'] = $username;
+        $_SESSION['level_users'] = $tingkat;
+        // alihkan ke halaman dashboard pegawai
+        header("location:dashboard/index.php");
 
-    $row = mysqli_fetch_assoc($result);
-    if ($row) {
-      $_SESSION['login'] = $row;
-      header('Location: index.php');
+        // row jika user login sebagai pengurus
+        // } else if ($data['level_users'] == "2") {
+        //     // buat session login dan username
+        //     $_SESSION['username'] = $username;
+        //     $_SESSION['level_users'] = "2";
+        //     // alihkan ke halaman dashboard pengurus
+        //     header("location:halaman_pengurus.php");
+    } else {
+
+        // alihkan ke halaman login kembali
+        header("location:index.php?pesan=gagal");
     }
-  }
+} else {
+    header("location:index.php?pesan=gagal");
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
+// if ($row['level_users_users'] == 1) {
+//     print("Dokter");
+// } else if ($row['level_users_users'] != 0) {
+//     print("Admin");
+// } else {
+//     print("Data Tidak Ditemukan");
+//     header('Location: index.php');
+// }
 
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Login Antrian Online</title>
-
-    <!-- General CSS Files -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="../assets/modules/bootstrap-social/bootstrap-social.css">
-
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
-    <style>
-    .error {
-        width: 100%;
-        background: #f2dede;
-        color: #a94442;
-        padding: 10px;
-        border-radius: 5px;
-        font-size: 1.2rem;
-    }
-    </style>
-</head>
-
-<body>
-    <div id="app">
-        <section class="section">
-            <div class="container mt-5">
-                <div class="row">
-                    <div
-                        class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                        <div class="login-brand">
-                            <img src="../assets/img/logo/logo-header.png" alt="logo" width="180" height="50">
-                        </div>
-
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>Login Admin</h4>
-                            </div>
-
-                            <!-- class="needs-validation " -->
-                            <div class="card-body">
-                                <?php if (isset($_GET['error'])) { ?>
-                                <p class="error"><?php echo $_GET['error']; ?></p>
-                                <?php } ?>
-                                <form method="POST" action="">
-                                    <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input id="username" type="text" class="form-control" name="username"
-                                            tabindex="1" autofocus>
-                                        <!-- <div class="invalid-feedback"> -->
-                                        <!-- Mohon isi username -->
-                                        <!-- </div> -->
-                                        <p id="errorUsername" style="color: red;"></p>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="d-block">
-                                            <label for="password" class="control-label">Password</label>
-                                        </div>
-                                        <input id="password" type="password" class="form-control" name="password"
-                                            tabindex="2">
-                                        <div class="invalid-feedback">
-                                            <!-- Mohon isi kata sandi -->
-                                        </div>
-                                        <p id="errorPassword" style="color: red;"></p>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="remember" class="custom-control-input"
-                                                tabindex="3" id="remember-me">
-                                            <label class="custom-control-label" for="remember-me">Ingat Saya</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit" name="submit" class="btn btn-primary btn-lg btn-block"
-                                            tabindex="3">
-                                            Login
-                                        </button>
-                                    </div>
-
-                                </form>
-
-                            </div>
-                        </div>
-                        <div class="simple-footer">
-                            Copyright &copy; Sistem Antrian Online
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- General JS Scripts -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="../assets/js/stisla.js"></script>
-
-    <!-- JS Libraies -->
-
-    <!-- Template JS File -->
-    <script src="../assets/js/scripts.js"></script>
-    <script src="../assets/js/custom.js"></script>
-    <!-- <script>
-
-    let form = document.getElementById('myForm');
-    var username = document.getElementById('username');
-    var password = document.getElementById('password');
-    var errorUsername = document.getElementById('errorUsername');
-    var errorPassword = document.getElementById('errorPassword');
-
-    username.addEventListener('keyup', function(){
-      errorUsername.innerHTML = '';
-    })
-
-    password.addEventListener('keyup', function(){
-      errorPassword.innerHTML = '';
-    })
-
-    form.addEventListener('click', () => {
-      // setTimeout(e.preventDefault(), 500);
-      if((username.value == null  || username.value == '')  &&  (password.value == null  || password.value == '')) {
-        errorUsername.innerHTML = 'username harap diisi!';
-        errorPassword.innerHTML = 'password harap diisi!';
-      }else if(password.value.length < 5) {
-        errorPassword.innerHTML = 'password minimal 6 charater';
-      }
-    })
-
-    
+// if ($row) {
+//   $_SESSION['login'] = $row;
+//   header('Location: coba.php');
+// }
 
 
-
-  </script> -->
-
-    <!-- Page Specific JS File -->
-</body>
-
-</html>
+// session_start();
+// if (isset($_SESSION['login'])) {
+//   header('Location: dashboard/index.php');
+// } else {
+//   header('Location: ./login.php');
+// }

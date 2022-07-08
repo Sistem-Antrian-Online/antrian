@@ -6,7 +6,7 @@
             </a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.php">AO</a>
+            <a href="index.php">RJ</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>

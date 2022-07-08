@@ -1,0 +1,33 @@
+<template>
+  <div class="page page-home">
+    <div class="navbar no-shadow" style="height: 50px">
+      <div class="navbar-bg" style="background: skyblue fixed"></div>
+      <div class="navbar-inner">
+        <img src="img/logo3.png" alt="" width="150" />
+      </div>
+    </div>
+
+    <!-- Navigation Bottom -->
+    <nav class="nav">
+      <a href="#" class="nav__link">
+        <i class="material-icons nav__icon">dashboard</i>
+        <span class="nav__text">Dashboard</span>
+      </a>
+      <a href="#" class="nav__link nav__link">
+        <i class="material-icons nav__icon">info_outline</i>
+        <span class="nav__text">About</span>
+      </a>
+    </nav>
+    <!-- Akhir Navigation Bottom -->
+
+    <div class="page-content" style="background: skyblue">
+      <h2 class="text-align-center" style="margin-bottom: 1rem; color: #fff">Antrian Poli</h2>
+      <div class="row data-antrian"></div>
+    </div>
+  </div>
+</template>
+<script>
+  export default function (props, ctx) {
+    return $render;
+  }
+</script>
