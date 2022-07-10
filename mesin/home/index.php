@@ -33,7 +33,7 @@ require_once '../../admin/helper/connection.php';
                     $addNol = "0";
                 }
 
-                $no_antrianpoli = $huruf . " " . $addNol . $incrementKode;
+                $no_antrianpoli = $huruf . $addNol . $incrementKode;
 
             ?>
             <div class="col text-center ">
@@ -81,7 +81,7 @@ function update(el) {
     let loket = $(el).data("loket");
     let poli = $(el).data("nama");
 
-    if (date_check.getHours() >= "7" && date_check.getHours() <= "22") {
+    if (date_check.getHours() >= "0" && date_check.getHours() <= "2") {
         if (confirm('Yakin?') == true) {
             $.ajax({
                 url: "create.php",
