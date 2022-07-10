@@ -1,2 +1,3 @@
 # Sistem Antrian Online
-Tinggal Mobile
+
+Ayoo Semangat Kurang 10%

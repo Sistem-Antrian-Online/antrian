@@ -10,7 +10,7 @@ isLogin();
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>ANTRIAN ONLINE SU</title>
+  <title>Antrian Online RS Jombang</title>
 
   <!-- Logo Title -->
   <link rel="icon" href="../../assets/img/logo/logo-header.png" type="image/x-icon">

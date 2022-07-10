@@ -10,7 +10,7 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li><a class="nav-link" href="../"><i class="fas fa-fire"></i> <span>Home</span></a></li>
+            <li><a class="nav-link" href="../dashboard/index.php"><i class="fas fa-fire"></i> <span>Home</span></a></li>
             <li class="menu-header">Main Feature</li>
             <?php if ($_SESSION['level'] == 1) {
             ?>
