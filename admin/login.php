@@ -12,12 +12,14 @@ if ($row > 0) {
     $data = mysqli_fetch_assoc($result);
     $nama = $data['nama'];
     $tingkat = $data['level'];
+    $id_poli = $data['id_poli'];
     // row jika user login sebagai admin
     if ($data['level'] == "1") {
         // buat session login dan username
         $_SESSION['nama'] = $nama;
         $_SESSION['username'] = $username;
         $_SESSION['level'] = $tingkat;
+        $_SESSION['id_poli'] = $id_poli;
         // alihkan ke halaman dashboard admin
         header("location:dashboard/index.php");
 
@@ -27,6 +29,7 @@ if ($row > 0) {
         $_SESSION['nama'] = $nama;
         $_SESSION['username'] = $username;
         $_SESSION['level'] = $tingkat;
+        $_SESSION['id_poli'] = $id_poli;
         // alihkan ke halaman dashboard asdok
         header("location:dashboard/index.php");
     } else {

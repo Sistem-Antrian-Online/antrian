@@ -11,7 +11,8 @@ $nama = $_POST['nama'];
 $username = $_POST['username'];
 $password = $_POST['password'];
 $level = $_POST['level'];
-$query = mysqli_query($connection, "insert into users (id, nama, username, password, level) value ('$no', '$nama', '$username', '$password', '$level')");
+$id_poli = $_POST['id_poli'];
+$query = mysqli_query($connection, "insert into users (id, nama, username, password, level, id_poli) value ('$no', '$nama', '$username', '$password', '$level', '$id_poli')");
 
 if ($query) {
   $_SESSION['info'] = [

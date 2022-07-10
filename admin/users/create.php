@@ -40,6 +40,16 @@ require_once '../helper/connection.php';
                                 </td>
                             </tr>
                             <tr>
+                                <td>Nama Poli</td>
+                                <td>
+                                    <select class="form-control" name="id_poli" id="id_poli" required>
+                                        <option value="">--Pilih Level User--</option>
+                                        <option value="1">Administrator</option>
+                                        <option value="2">Asisten Dokter</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>
                                     <input class="btn btn-primary" type="submit" name="proses" value="Simpan">
                                     <input class="btn btn-danger" type="reset" name="batal" value="Bersihkan">

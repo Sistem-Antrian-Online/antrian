@@ -9,6 +9,7 @@ if ($_SESSION['level'] == 1) {
   $alias = "Asisten Dokter";
 } else {
   $alias = "Tidak Terdaftar";
+  header('location:../index.php');
 }
 ?>
 <div class="navbar-bg"></div>

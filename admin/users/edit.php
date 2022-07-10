@@ -4,6 +4,7 @@ require_once '../helper/connection.php';
 
 $id = $_GET['id'];
 $query = mysqli_query($connection, "SELECT * FROM users WHERE id='$id'");
+$poli = mysqli_query($connection, "SELECT * FROM poli WHERE id_poli");
 ?>
 
 <section class="section">
@@ -41,6 +42,21 @@ $query = mysqli_query($connection, "SELECT * FROM users WHERE id='$id'");
                                             <option value="<?= $row['level'] ?>">Jika tidak diubah biarkan</option>
                                             <option value="1">Administrator</option>
                                             <option value="2">Asisten Dokter</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Poli</td>
+                                    <td>
+                                        <select class="form-control" name="id_poli" id="id_poli" required>
+                                            <option value="<?= $row['id_poli'] ?>">Jika tidak diubah biarkan</option>
+                                            <?php
+                                            while ($r = mysqli_fetch_array($poli)) :
+                                            ?>
+                                                <option value="<?= $r['id_poli'] ?>"><?= $r['nama'] ?></option>
+                                            <?php
+                                            endwhile;
+                                            ?>
                                         </select>
                                     </td>
                                 </tr>

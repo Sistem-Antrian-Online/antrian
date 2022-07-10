@@ -1,28 +1,28 @@
 <?php
 require_once '../layout/_top.php';
 require_once '../helper/connection.php';
-    $id_poli = $_GET['id'];
-    $poli = $_GET['poli'];
-    $loket_poli = $_GET['loket'];
+$id_poli = $_GET['id'];
+$poli = $_GET['poli'];
+$loket_poli = $_GET['loket'];
 
-    // antrian selanjutnya & sisa antrian
-    $sql = "SELECT *, COUNT(SUBSTR(no_antrian, 1)) AS sisa_antrian, MIN(no_antrian) AS nomor_selanjutnya FROM antrian WHERE STATUS = 'Belum' AND no_antrian LIKE '%$loket_poli%' ORDER BY id ASC LIMIT 1";
-    $query = mysqli_query($connection, $sql);
-    $data = mysqli_fetch_array($query);
+// antrian selanjutnya & sisa antrian
+$sql = "SELECT *, COUNT(SUBSTR(no_antrian, 1)) AS sisa_antrian, MIN(no_antrian) AS nomor_selanjutnya FROM antrian WHERE STATUS = 'Belum' AND no_antrian LIKE '%$loket_poli%' ORDER BY id ASC LIMIT 1";
+$query = mysqli_query($connection, $sql);
+$data = mysqli_fetch_array($query);
 
-    // nomor antrian selanjutnya
-    $nomor_selanjutnya = isset($data['nomor_selanjutnya']) ? $data['nomor_selanjutnya'] : $loket_poli.'000';
+// nomor antrian selanjutnya
+$nomor_selanjutnya = isset($data['nomor_selanjutnya']) ? $data['nomor_selanjutnya'] : $loket_poli . '000';
 
-    // sisa antrian pasien poli
-    $sisa_antrian_poli = isset($data['sisa_antrian']) ? $data['sisa_antrian'] : '0';
-    
-    // panggilan
-    $sql2 = "SELECT *, MAX(no_antrian) AS nomor_panggilan FROM antrian WHERE STATUS = 'Melayani' AND no_antrian LIKE '%$loket_poli%' LIMIT 1";
-    $query2 = mysqli_query($connection, $sql2);
-    $data2 = mysqli_fetch_array($query2);
+// sisa antrian pasien poli
+$sisa_antrian_poli = isset($data['sisa_antrian']) ? $data['sisa_antrian'] : '0';
 
-    // panggilan ketika dilayani
-    $nomor_panggilan_dilayani = isset($data2['nomor_panggilan']) ? $data2['nomor_panggilan'] : $loket_poli.'---';
+// panggilan
+$sql2 = "SELECT *, MAX(no_antrian) AS nomor_panggilan FROM antrian WHERE STATUS = 'Melayani' AND no_antrian LIKE '%$loket_poli%' LIMIT 1";
+$query2 = mysqli_query($connection, $sql2);
+$data2 = mysqli_fetch_array($query2);
+
+// panggilan ketika dilayani
+$nomor_panggilan_dilayani = isset($data2['nomor_panggilan']) ? $data2['nomor_panggilan'] : $loket_poli . '---';
 ?>
 
 <section class="section">
@@ -41,40 +41,40 @@ require_once '../helper/connection.php';
                         <h2 id="nomor-antrian-selanjutnya"><?= $nomor_selanjutnya; ?></h2>
                     </div>
                     <div class="bg-sisa-antrian">
-                        <h2>Sisa Antrian : <?=  $sisa_antrian_poli; ?> </h2>
+                        <h2>Sisa Antrian : <?= $sisa_antrian_poli; ?> </h2>
                     </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="container-panggil-antrian shadow p-3 mb-5 rounded">
                     <div class="bg-title-panggilan">
-                        <h1>PANGGILAN</h1> 
+                        <h1>PANGGILAN</h1>
                     </div>
                     <!-- <form > -->
-                        <div class="box-nomor ">
-                            <h2><?= $nomor_panggilan_dilayani ?></h2>
-                        </div>
+                    <div class="box-nomor ">
+                        <h2><?= $nomor_panggilan_dilayani ?></h2>
+                    </div>
 
-                        <input type="text" id="id" value="<?= $id_poli ?>" hidden> <!-- id poli -->
-                        <input type="text" id="poli" value="<?= $poli; ?>" hidden> <!-- nama poli -->
-                        <input type="text" id="nomor_dilayani" value="<?= $nomor_panggilan_dilayani ?>" hidden> <!-- nomor dilayani -->
-                        <input type="text" id="nomor_selanjutnya" value="<?= $nomor_selanjutnya ?>" hidden> <!-- nomor selanjutnya -->
-                        <input type="text" id="loket" value="<?= $loket_poli; ?>" hidden> <!-- loket -->
+                    <input type="text" id="id" value="<?= $id_poli ?>" hidden> <!-- id poli -->
+                    <input type="text" id="poli" value="<?= $poli; ?>" hidden> <!-- nama poli -->
+                    <input type="text" id="nomor_dilayani" value="<?= $nomor_panggilan_dilayani ?>" hidden> <!-- nomor dilayani -->
+                    <input type="text" id="nomor_selanjutnya" value="<?= $nomor_selanjutnya ?>" hidden> <!-- nomor selanjutnya -->
+                    <input type="text" id="loket" value="<?= $loket_poli; ?>" hidden> <!-- loket -->
 
-                        <div class="button-panggilan">
-                            <button class="btn btn-primary text-center" onclick="lanjut(this)" data-antrian="<?= $nomor_selanjutnya ?>">
-                                <span>Lanjut</span>
-                            </button>
-                            <button class="btn btn-secondary text-center" onclick="lewati(this)" data-antrian="<?= $nomor_panggilan_dilayani ?>">
-                                <span>Lewati</span>
-                            </button>
-                            <button class="btn btn-warning text-center" data-loket="<?= $loket_poli; ?>" data-nomor="<?= $nomor_panggilan_dilayani ?>" data-poli="<?= $poli; ?>" onclick="panggil(this)">
-                                <span>Panggil</span>
-                            </button>                           
-                            <button class="btn btn-success text-center" onclick="selesai(this)" data-nomor="<?= $nomor_panggilan_dilayani ?>">
-                                <span>Selesai</span>
-                            </button>                           
-                        </div>
+                    <div class="button-panggilan">
+                        <button class="btn btn-primary text-center" onclick="lanjut(this)" data-antrian="<?= $nomor_selanjutnya ?>">
+                            <span>Lanjut</span>
+                        </button>
+                        <button class="btn btn-secondary text-center" onclick="lewati(this)" data-antrian="<?= $nomor_panggilan_dilayani ?>">
+                            <span>Lewati</span>
+                        </button>
+                        <button class="btn btn-warning text-center" data-loket="<?= $loket_poli; ?>" data-nomor="<?= $nomor_panggilan_dilayani ?>" data-poli="<?= $poli; ?>" onclick="panggil(this)">
+                            <span>Panggil</span>
+                        </button>
+                        <button class="btn btn-success text-center" onclick="selesai(this)" data-nomor="<?= $nomor_panggilan_dilayani ?>">
+                            <span>Selesai</span>
+                        </button>
+                    </div>
                     <!-- </form> -->
                 </div>
             </div>
@@ -84,18 +84,17 @@ require_once '../helper/connection.php';
 
 <audio id="bel">
     <source src="audio/bel.mp3" type="audio/mpeg">
-</audio>            
+</audio>
 
 <script src="../../assets/js/jquery-3.6.0.js"></script>
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=LJri0j9i"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
-<script>    
-
+<script>
     /*
         menghubungkan firebase untuk menampilkan informasi 
         antrian dilayani saat ini LCD sama Mobile
-    */    
+    */
     const firebaseConfig = {
         apiKey: "AIzaSyBcj1h4Z0EHIYyuh9dEzbLnrfhnuvCUOaI",
         authDomain: "antrian-online-97d3b.firebaseapp.com",
@@ -120,8 +119,8 @@ require_once '../helper/connection.php';
         let poli = $(el).data('poli')
         let textNomor = nomor.split('').join(', ');
 
-        bel.play();    
-        
+        bel.play();
+
         db.ref('panggilan').set({
             loket: loket,
             nomor: nomor,
@@ -149,14 +148,16 @@ require_once '../helper/connection.php';
         $.ajax({
             url: 'nomorlanjutnya.php',
             type: 'POST',
-            data: {nomor: no_antrian},
+            data: {
+                nomor: no_antrian
+            },
             cache: false,
-            success: (data) => {         
+            success: (data) => {
                 location.reload(true);
-            }, 
+            },
             error: (e) => {
                 alert("Ada Kesalahan Cek Lagi " + e);
-            } 
+            }
         });
     }
 
@@ -167,14 +168,14 @@ require_once '../helper/connection.php';
         let nomor_dilayani = $('#nomor_dilayani').val();
         let nomor_selanjutnya = $('#nomor_selanjutnya').val();
         let loket = $('#loket').val();
-        
+
         db.ref('antrian_dilayani/' + id).set({
-                    loket: loket,
-                    nama_poli: poli,
-                    nomor_dilayani: nomor_dilayani,
-                    nomor_selanjutnya: nomor_selanjutnya,
-                    status: 'Sedang Melayani'
-                });
+            loket: loket,
+            nama_poli: poli,
+            nomor_dilayani: nomor_dilayani,
+            nomor_selanjutnya: nomor_selanjutnya,
+            status: 'Sedang Melayani'
+        });
     }
     setData();
 
@@ -184,7 +185,9 @@ require_once '../helper/connection.php';
         $.ajax({
             url: 'nomorlewati.php',
             type: 'POST',
-            data: {nomor: nomorSaatIni},
+            data: {
+                nomor: nomorSaatIni
+            },
             cache: false,
             success: (data) => {
                 alert('Nomor Antrian Dilewati');
@@ -199,7 +202,9 @@ require_once '../helper/connection.php';
         $.ajax({
             url: 'nomorselesai.php',
             type: 'POST',
-            data: {nomor: nomorSaatIni},
+            data: {
+                nomor: nomorSaatIni
+            },
             cache: false,
             success: (data) => {
                 alert('Nomor Antrian Selesai');
@@ -207,7 +212,6 @@ require_once '../helper/connection.php';
             },
         });
     }
-
 </script>
 
 <!-- akhir layout -->

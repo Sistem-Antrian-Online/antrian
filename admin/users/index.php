@@ -22,6 +22,7 @@ $result = mysqli_query($connection, "SELECT * FROM users");
                   <th>Nama</th>
                   <th>Username</th>
                   <th>level</th>
+                  <th>Poli</th>
                   <th style="width: 150">Aksi</th>
                 </tr>
               </thead>
@@ -44,6 +45,7 @@ $result = mysqli_query($connection, "SELECT * FROM users");
                     <td><?= $data['nama'] ?></td>
                     <td><?= $data['username'] ?></td>
                     <td><?= $alias ?></td>
+                    <td><?= $data['id_poli'] ?></td>
                     <td>
                       <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?id=<?= $data['id'] ?>">
                         <i class="fas fa-trash fa-fw"></i>
