@@ -1,29 +1,65 @@
 <template>
   <div class="page page-home">
-    <div class="navbar no-shadow" style="height: 50px">
-      <div class="navbar-bg" style="background: skyblue fixed"></div>
+    <div class="navbar no-shadow" style="height: 55px">
+      <div class="navbar-bg" style="background: url('img/RSUDDD.png') fixed"></div>
       <div class="navbar-inner">
-        <img src="img/logo3.png" alt="" width="150" />
+        <img src="img/logo3.png" alt="logo-rsud" width="150" style="display: block; margin: 0 auto" />
       </div>
     </div>
 
-    <!-- Navigation Bottom -->
-    <nav class="nav">
-      <a href="#" class="nav__link">
-        <i class="material-icons nav__icon">dashboard</i>
-        <span class="nav__text">Dashboard</span>
-      </a>
-      <a href="#" class="nav__link nav__link">
-        <i class="material-icons nav__icon">info_outline</i>
-        <span class="nav__text">About</span>
-      </a>
-    </nav>
-    <!-- Akhir Navigation Bottom -->
-
-    <div class="page-content" style="background: skyblue">
-      <h2 class="text-align-center" style="margin-bottom: 1rem; color: #fff">Antrian Poli</h2>
-      <div class="row data-antrian"></div>
+    <div class="toolbar tabbar tabbar-labels toolbar-bottom no-shadow tabs-swipeable" style="background: white">
+      <div class="toolbar-inner">
+        <a href="#tab-menu" class="tab-link tab-link-active" style="color: #336e7b">
+          <i class="icon f7-icons">circle_grid_3x3</i>
+          <span class="tabbar-label">Menu</span>
+        </a>
+        <a href="#tab-informasi" class="tab-link" style="color: #336e7b">
+          <i class="icon f7-icons">info_circle</i>
+          <span class="tabbar-label">Informasi</span>
+        </a>
+      </div>
     </div>
+
+    <div style="background: url('img/RSUDDD.png'); height: 3798px; background-size: cover"></div>
+    <!--  -->
+    <div class="tabs" style="margin-top: -3728px">
+      <div id="tab-menu" class="page-content tab tab-active">
+        <div class="row no-gap" style="margin: -50px 5px 0px 5px">
+          <div class="col" style="text-align: center">
+            <div class="card" style="border-radius: 15px; font-weight: bold; box-shadow: 0px 4px rgba(0, 0, 0, 0.25);">
+              <div class="card-content card-content-padding" id="panggilan">
+                <font style="font-size: 1.2rem" id="status"></font><br />
+                <font style="font-size: 17px">Nomor Antrian</font><br />
+                <font style="font-size: 35px" id="nomor"></font><br />
+                <font style="font-size: 1rem" id="poli"></font><br />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row no-gap data-antrian" style="margin: 0px 5px 0px 5px"></div>
+        <br /><br /><br /><br />
+      </div>
+
+      <div class="page-content tab" id="tab-informasi">
+        <p class="row" style="font-size: 18px; margin: 0 5px; height:1000px;">
+          <div class="card" style="margin-top: -70px; padding: 20px; box-shadow: 0px 4px rgba(0, 0, 0, 0.25);">
+              <div class="text-align-center" style="font-weight: 500; font-size: 1.5rem;">
+                <p>Ketentuan Antrian Online</p>
+              </div>
+              <ol style="margin-left: -1rem;">
+                <li>Nomor Antrian Berlaku Bagi Pasien Rawat Jalan RSUD Kabupaten Jombang</li>
+                <li>Pengambilan Nomor Antrian Poli Mulai Pukul 07.00 -  11.00 WIB.</li>
+                <li>Layanan Antrian Poli Dapat Tutup Sewaktu - Waktu Karena Satu Dan Lain Hal</li>
+                <li>Bagi Pasien Yang Telah melakukan Pengambilan Nomor Antrian Poli, Akan Mendapatkan Bukti Cetak Dan Jangan Sampai Hilang.</li>
+                <li>Pasien Dapat Melihat Panggilan Nomor Antrian Poli Melalui LCD Dan Website RSUD Kabupaten Jombang</li>
+                <li>Pasien Akan Dipanggil 3 Kali Sehingga Diharapkan Memperhatikan Nomor Antrian Poli.</li>
+              </ol>
+              <button class="col button button-fill" style="height: 2.1rem;  padding: 10px 0; background-color: green; margin: 0 auto;"><i class="fa-brands fa-whatsapp" style="font-size: 1.2rem; margin-right: 5px;"></i> Whatsapp</button>
+          </div>
+        </p>
+      </div>
+    </div>
+    <!--  -->
   </div>
 </template>
 <script>

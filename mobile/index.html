@@ -15,6 +15,13 @@
     <!-- link css custom -->
     <link rel="stylesheet" href="css/style.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <div id="app">
@@ -42,9 +49,13 @@
       firebase.initializeApp(firebaseConfig);
       var db = firebase.database();
       var antrianFR = db.ref("antrian_dilayani");
+      var panggilanFR = db.ref("panggilan");
 
-      // baca data firebase
+      // baca data poli
       antrianFR.on("value", bacaData);
+
+      // baca data panggilan
+      panggilanFR.on("value", panggilanData);
 
       function bacaData(snap) {
         let hasil = "";
@@ -53,39 +64,55 @@
           let poli = kolom.val().nama_poli;
           let nomor = kolom.val().nomor_dilayani;
           let nomor_selanjutnya = kolom.val().nomor_selanjutnya;
+          let waktu = kolom.val().waktu_dilayani;
           let status = kolom.val().status;
 
           hasil +=
-            "<a href='#' style='text-align: center; font-wight: bold; color: #000;' data-loket=" +
+            "<div  class='col-50' data-loket='" +
             loket +
-            " data-poli='" +
+            "' data-poli='" +
             poli +
             "' data-nomor1='" +
             nomor +
             "' data-nomor2='" +
             nomor_selanjutnya +
+            "' data-waktu='" +
+            waktu +
             "' data-status='" +
             status +
-            "' onclick='detailAntrian(this)' class='col-50'><div class='card'><div class='card-header'>" +
+            "' onclick='detail_antrian(this)' style='text-align: center;'><div class='card' style='border-radius: 15px; box-shadow: 0px 4px rgba(0, 0, 0, 0.25);' ><div class='card-content card-content-padding'><font style='font-size: 17px;'>Antrian<br>" +
             poli +
-            "</div><div class='card-content' style='padding: 2rem 0; font-size: 1.8rem;'>" +
+            "</font><br><font style='font-size: 40px;'>" +
             nomor +
-            "</div><div class='card-footer' >" +
+            "</font><br><font style='font-size: 1rem;'>" +
             status +
-            "</div></div></a>";
+            "</font><br></div></div></div>";
         });
 
         $(".data-antrian").html(hasil);
       }
 
-      function detailAntrian(el) {
+      function panggilanData(snap) {
+        let nomor = snap.val().nomor;
+        let poli = snap.val().poli;
+        let status = snap.val().status;
+
+        $("#nomor").html(nomor);
+        $("#poli").html(poli);
+        $("#status").html(status);
+      }
+
+      function detail_antrian(el) {
+        // alert("test mas");
         let loket = $(el).data("loket");
         let poli = $(el).data("poli");
         let nomor1 = $(el).data("nomor1"); // nomor dilayani
         let nomor2 = $(el).data("nomor2"); // nomor selanjutnya
+        let waktu = $(el).data("waktu");
         let status = $(el).data("status");
 
-        app.views.main.router.navigate("/detailantrian/?loket=" + loket + "&poli=" + poli + "&nomor1=" + nomor1 + "&nomor2=" + nomor2 + "&status=" + status);
+        console.log(loket + poli + nomor1 + nomor2 + waktu + status);
+        app.views.main.router.navigate("/detailantrian/?loket=" + loket + "&poli=" + poli + "&nomor1=" + nomor1 + "&nomor2=" + nomor2 + "&waktu=" + waktu + "&status=" + status);
       }
     </script>
   </body>
