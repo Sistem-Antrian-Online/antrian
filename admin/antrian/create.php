@@ -14,7 +14,7 @@ if (mysqli_num_rows($poli) > 0) {
 }
 date_default_timezone_set('Asia/Jakarta');
 $tgl = date("Y-m-d");
-$query = mysqli_query($connection, "SELECT max(no_antrian) as no_antrianTerbesar FROM antrian WHERE no_antrian LIKE '$huruf%' AND waktu = '$tgl%'");
+$query = mysqli_query($connection, "SELECT max(no_antrian) as no_antrianTerbesar FROM antrian WHERE no_antrian LIKE '$huruf%' AND waktu LIKE '$tgl%'");
 $data = mysqli_fetch_array($query);
 $no_antrianpoli = $data['no_antrianTerbesar'];
 // mengambil angka dari no_antrian barang terbesar, menggunakan fungsi substr
@@ -58,7 +58,7 @@ $no_antrianpoli = $huruf . sprintf("%03s", $urutan);
                   <select class="form-control" name="status" id="status" required>
                     <option value="Belum">--Pilih Status--</option>
                     <option value="Sudah">Sudah</option>
-                    <option value="Proses">Proses</option>
+                    <option value="Lewati">Lewati</option>
                     <option value="Belum">Belum</option>
                   </select>
                 </td>

@@ -14,16 +14,15 @@ $result = mysqli_query($connection, "SELECT * FROM antrian");
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="col">
-                        <form method="POST" class="form-inline">
-                            <input type="date" name="tglstart" class="form-control">
-                            <button type="submit" name="filter_tgl" class="btn btn-info"></button>
-                        </form>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <div class="float-right">
+                            <form method="POST" class="form-inline pb-3">
+                                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                                <input type="date" name="tglstart" id="tglan" class="form-control" value="2022-06-24">
+                                <input type="submit" name="filter_tgl" class="btn btn-info" value="Cari">
+                            </form>
+                        </div>
                         <table class="table table-hover table-striped w-100">
                             <thead>
                                 <tr class="text-center">
@@ -35,7 +34,7 @@ $result = mysqli_query($connection, "SELECT * FROM antrian");
                                     <th style="width: 150">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="isitab">
                                 <?php
                                 if (isset($_POST['filter_tgl'])) {
                                     $mulai = $_POST['tglstart'];
@@ -61,7 +60,7 @@ $result = mysqli_query($connection, "SELECT * FROM antrian");
                                             <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?id=<?= $data['id'] ?>">
                                                 <i class="fas fa-trash fa-fw"></i>
                                             </a>
-                                            <a class="btn btn-sm btn-info" href="edit.php?id=<?= $data['id'] ?>">
+                                            <a class="btn btn-sm btn-info" href="edit.php?id=<?= $pol['id'] ?>">
                                                 <i class="fas fa-edit fa-fw"></i>
                                             </a>
                                         </td>
@@ -73,6 +72,15 @@ $result = mysqli_query($connection, "SELECT * FROM antrian");
                                 ?>
                             </tbody>
                         </table>
+                        <form method="POST" class="form-inline pb-3" action="editpoli.php">
+                            <input type="text" id="id_poli" name="id_poli" value=" <?= $_SESSION['id_poli'] ?>" hidden>
+                            <select class="form-control" name="statu" id="statu" required>
+                                <option value="1">--Pilih Status--</option>
+                                <option value="1">Buka</option>
+                                <option value="2">Tutup</option>
+                            </select>
+                            <input type="submit" class="btn btn-info" value="Ubah">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -114,3 +122,36 @@ if (isset($_SESSION['info'])) :
 endif;
 ?>
 <script src="../../assets/js/page/modules-datatables.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#isitab tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<script>
+    function status(el) {
+        var id_poli = $(el).data('');
+        var loket = $(el).data('loket');
+        var nama_poli = $(el).data('poli');
+        var no_antrian = $(el).data('antrian');
+
+        $.ajax({
+            url: 'nomorlanjutnya.php',
+            type: 'POST',
+            data: {
+                nomor: no_antrian
+            },
+            cache: false,
+            success: (data) => {
+                location.reload(true);
+            },
+            error: (e) => {
+                alert("Ada Kesalahan Cek Lagi " + e);
+            }
+        });
+    }
+</script>

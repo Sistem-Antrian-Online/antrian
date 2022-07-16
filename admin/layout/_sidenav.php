@@ -57,17 +57,31 @@
                     $poli = $data['nama'];
                     $loket = $data['loket'];
                     $id_poli = $data['id_poli'];
+                    $statu = $data['statu'];
+                    if ($statu == 1) {
+
 
                 ?>
-                    <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bell"></i>
-                            <span>Panggilan</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="../panggilan/listantri.php?id=<?= $id_poli ?>">List</a></li>
-                            <li><a class="nav-link" href="../panggilan/panggilan.php?id=<?= $id_poli ?>&poli=<?= $poli; ?>&loket=<?= $loket; ?>">Panggil</a></li>
-                        </ul>
-                    </li>
+                        <li class="dropdown">
+                            <a href="" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bell"></i>
+                                <span>Panggilan</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="../panggilan/listantri.php?id=<?= $id_poli ?>">List</a></li>
+                                <li><a class="nav-link" href="../panggilan/panggilan.php?id=<?= $id_poli ?>&poli=<?= $poli; ?>&loket=<?= $loket; ?>">Panggil</a></li>
+                            </ul>
+                        </li>
+                    <?php
+                    } else {
+                    ?>
+                        <li class="dropdown">
+                            <a href="" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bell"></i>
+                                <span>Panggilan</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="../panggilan/listantri.php?id=<?= $id_poli ?>">List</a></li>
+                            </ul>
+                        </li>
             <?php
+                    }
                 }
             }
             ?>

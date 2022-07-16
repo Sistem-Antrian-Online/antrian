@@ -5,8 +5,11 @@ $id_poli = $_GET['id'];
 $poli = $_GET['poli'];
 $loket_poli = $_GET['loket'];
 
+date_default_timezone_set('Asia/Jakarta');
+$tgl = date("Y-m-d");
+
 // antrian selanjutnya & sisa antrian
-$sql = "SELECT *, COUNT(SUBSTR(no_antrian, 1)) AS sisa_antrian, MIN(no_antrian) AS nomor_selanjutnya FROM antrian WHERE STATUS = 'Belum' AND no_antrian LIKE '%$loket_poli%' ORDER BY id ASC LIMIT 1";
+$sql = "SELECT *, COUNT(SUBSTR(no_antrian, 1)) AS sisa_antrian, MIN(no_antrian) AS nomor_selanjutnya FROM antrian WHERE STATUS = 'Belum' AND (no_antrian LIKE '%A%' AND waktu LIKE '$tgl%') ORDER BY id ASC LIMIT 1";
 $query = mysqli_query($connection, $sql);
 $data = mysqli_fetch_array($query);
 
