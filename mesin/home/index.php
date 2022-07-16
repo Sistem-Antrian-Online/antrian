@@ -16,12 +16,17 @@ require_once '../../admin/helper/connection.php';
         <hr>
         <div class="row row-cols-1 row-cols-md-6 g-2 ">
             <?php
-            $poli = mysqli_query($connection, "SELECT a.*, MAX(b.no_antrian) as antrian FROM poli as a LEFT OUTER JOIN antrian as b on a.id_poli = b.id_poli GROUP BY a.id_poli ORDER BY a.loket");
+            date_default_timezone_set('Asia/Jakarta');
+            $tgl = date("Y-m-d");
+            $poli = mysqli_query($connection, "SELECT * FROM poli GROUP BY id_poli ORDER BY loket");
             while ($data = mysqli_fetch_array($poli)) {
-                $huruf = $data['loket'];
                 $nama = $data['nama'];
                 $idpoli = $data['id_poli'];
-                $kode = $data['antrian'];
+                $huruf = $data["loket"];
+                $query = mysqli_query($connection, "SELECT max(no_antrian) AS antrian FROM antrian WHERE no_antrian LIKE '$huruf%' AND waktu LIKE '$tgl%'");
+                while ($row = mysqli_fetch_array($query)) {
+                    $kode = $row['antrian'];
+                }
                 $addNol = '';
                 $kode = str_replace($huruf, "", $kode);
                 $kode = (int) $kode + 1;
