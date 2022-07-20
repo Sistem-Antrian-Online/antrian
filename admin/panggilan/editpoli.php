@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../helper/connection.php';
-$id = $_POST['id_poli'];
+$id = $_SESSION['id_poli'];
 $statu = $_POST['statu'];
 
 $query = mysqli_query($connection, "UPDATE poli SET statu = '$statu' WHERE id_poli='$id'");

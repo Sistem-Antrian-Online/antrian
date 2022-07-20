@@ -15,11 +15,11 @@ if ($query) {
     'status' => 'success',
     'message' => 'Berhasil mengubah data'
   ];
-  header("Location: ./listantri.php?id='$id_poli'");
+  header("Location:../dashboard/index.php");
 } else {
   $_SESSION['info'] = [
     'status' => 'failed',
     'message' => mysqli_error($connection)
   ];
-  header("Location: ./listantri.php?id='$id_poli'");
+  header("Location:../dashboard/index.php");
 }

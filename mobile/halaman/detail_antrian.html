@@ -1,41 +1,41 @@
 <template>
   <div class="page page-home">
-    <div class="navbar no-shadow" style="color: #fff; height: 55px">
-      <div class="navbar-bg" style="background: skyblue" fixed></div>
+    <div class="navbar no-shadow" style="background: url('img/RSUDDD.png'); height: 55px">
+      <div class="nabar-bg" style="background: url('img/header.png')" fixed></div>
       <div class="navbar-inner">
-        <div class="left color-black">
-          <a href="#" class="back"><i class="icon f7-icons">chevron_left</i>Back </a>
+        <div class="left">
+          <a href="#" class="back" style="color: #000; font-size: 1.1rem; margin-left: 10px"><i class="f7-icons" style="font-size: 1.2rem; font-weight: bold">arrow_left</i></a>
         </div>
         <div class="title sliding">Detail Antrian</div>
       </div>
     </div>
-    <div class="" style="background: skyblue; height: 3789px"></div>
-    <div class="page-content" style="margin-top: -3800px">
-      <div class="card card-outline" style="margin: 0 10px; border-radius: 15px">
+    <!-- <div style="background: url('img/RSUDDD.png'); height: 3798px; background-size: cover"></div> -->
+    <div class="page-content" style="margin-top: 30px; background: url('img/RSUDDD.png')">
+      <div class="card card-outline" style="margin: 0 10px; border-radius: 10px; box-shadow: 0px 4px rgba(0, 0, 0, 0.25)">
         <div class="card-content card-content-padding">
-          <div class="detail-antrian" style="font-size: 20px"></div>
+          <div class="text-align-center" style="font-weight: 500; font-size: 1.5rem">
+            <p id="loket-poli"></p>
+            <p id="nama-poli"></p>
+            <p id="nomor-antrian"></p>
+            <p id="waktu-melayani"></p>
+            <p id="nomor-selanjutnya"></p>
+            <p></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
   export default function (props, ctx) {
     var $on = ctx.$on;
     $on("pageInit", () => {
-      $(".detail-antrian").html(
-        "<p style='font-size: 1.8rem; text-align: center;'><b>Loket </b>" +
-          app.view.main.router.currentRoute.query.loket +
-          "</p><p><b>Poli : </b>" +
-          app.views.main.router.currentRoute.query.poli +
-          "</p><p><b>Nomor antrian saat ini:</b><br>" +
-          app.views.main.router.currentRoute.query.nomor1 +
-          "</p><p><b>Status : </b><br>" +
-          app.view.main.router.currentRoute.query.status +
-          "</p><p><b>Nomor Selanjutnya : </b><br>" +
-          app.view.main.router.currentRoute.query.nomor2 +
-          "</p>"
-      );
+      $("#loket-poli").html("Loket " + app.views.main.router.currentRoute.query.loket + " <br/> " + app.views.main.router.currentRoute.query.nomor1);
+      $("#nama-poli").html(app.views.main.router.currentRoute.query.poli);
+      $("#nomor-antrian").html("Antrian : " + app.views.main.router.currentRoute.query.nomor1);
+      $("#waktu-melayani").html("Waktu Melayani : " + app.views.main.router.currentRoute.query.waktu);
+      $("#nomor-selanjutnya").html("Antrian Selanjutnya : " + app.views.main.router.currentRoute.query.nomor2);
     });
     return $render;
   }

@@ -23,32 +23,33 @@ $result = mysqli_query($connection, "SELECT p.*, d.nama AS nama_dokter FROM poli
                                     <th>Deskripsi</th>
                                     <th>Loket</th>
                                     <th>Nama Dokter</th>
+                                    <th>Status</th>
                                     <th style="width: 150">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                while ($data = mysqli_fetch_array($result)) :
-                ?>
-                                <tr>
-                                    <td><?= $data['id_poli'] ?></td>
-                                    <td><?= $data['nama'] ?></td>
-                                    <td><?= $data['deskripsi'] ?></td>
-                                    <td><?= $data['loket'] ?></td>
-                                    <td><?= $data['nama_dokter'] ?></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-danger mb-md-0 mb-1"
-                                            href="delete.php?id_poli=<?= $data['id_poli'] ?>">
-                                            <i class="fas fa-trash fa-fw"></i>
-                                        </a>
-                                        <a class="btn btn-sm btn-info" href="edit.php?id_poli=<?= $data['id_poli'] ?>">
-                                            <i class="fas fa-edit fa-fw"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                while ($data = mysqli_fetch_array($result)) :
+                                ?>
+                                    <tr>
+                                        <td><?= $data['id_poli'] ?></td>
+                                        <td><?= $data['nama'] ?></td>
+                                        <td><?= $data['deskripsi'] ?></td>
+                                        <td><?= $data['loket'] ?></td>
+                                        <td><?= $data['nama_dokter'] ?></td>
+                                        <td><?= $data['statu'] ?></td>
+                                        <td>
+                                            <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?id_poli=<?= $data['id_poli'] ?>">
+                                                <i class="fas fa-trash fa-fw"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-info" href="edit.php?id_poli=<?= $data['id_poli'] ?>">
+                                                <i class="fas fa-edit fa-fw"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php
-                endwhile;
-                ?>
+                                endwhile;
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -63,32 +64,32 @@ require_once '../layout/_bottom.php';
 <!-- Page Specific JS File -->
 <?php
 if (isset($_SESSION['info'])) :
-  if ($_SESSION['info']['status'] == 'success') {
+    if ($_SESSION['info']['status'] == 'success') {
 ?>
-<script>
-iziToast.success({
-    title: 'Sukses',
-    message: `<?= $_SESSION['info']['message'] ?>`,
-    position: 'topCenter',
-    timeout: 5000
-});
-</script>
+        <script>
+            iziToast.success({
+                title: 'Sukses',
+                message: `<?= $_SESSION['info']['message'] ?>`,
+                position: 'topCenter',
+                timeout: 5000
+            });
+        </script>
+    <?php
+    } else {
+    ?>
+        <script>
+            iziToast.error({
+                title: 'Gagal',
+                message: `<?= $_SESSION['info']['message'] ?>`,
+                timeout: 5000,
+                position: 'topCenter'
+            });
+        </script>
 <?php
-  } else {
-  ?>
-<script>
-iziToast.error({
-    title: 'Gagal',
-    message: `<?= $_SESSION['info']['message'] ?>`,
-    timeout: 5000,
-    position: 'topCenter'
-});
-</script>
-<?php
-  }
+    }
 
-  unset($_SESSION['info']);
-  $_SESSION['info'] = null;
+    unset($_SESSION['info']);
+    $_SESSION['info'] = null;
 endif;
 ?>
 <script src="../../assets/js/page/modules-datatables.js"></script>

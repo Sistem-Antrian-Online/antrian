@@ -51,6 +51,16 @@ $dokter = mysqli_query($connection, "SELECT * FROM dokter WHERE id_dokter");
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Status</td>
+                                    <td>
+                                        <select class="form-control" name="statu" id="statu" required value="<?= $row['statu'] ?>">
+                                            <option value="<?= $row['statu'] ?>">Ubah atau Tidak</option>
+                                            <option value="1">Buka</option>
+                                            <option value="2">Tutup</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <input class="btn btn-primary d-inline" type="submit" name="proses" value="Ubah">
                                         <a href="./index.php" class="btn btn-danger ml-1">Batal</a>

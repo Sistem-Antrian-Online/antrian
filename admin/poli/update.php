@@ -7,8 +7,9 @@ $nama = $_POST['nama'];
 $deskripsi = $_POST['deskripsi'];
 $loket = $_POST['loket'];
 $id_dokter = $_POST['id_dokter'];
+$statu = $_POST['statu'];
 
-$query = mysqli_query($connection, "UPDATE poli SET nama = '$nama', deskripsi = '$deskripsi', loket = '$loket', id_dokter = '$id_dokter' WHERE id_poli = '$id_poli'");
+$query = mysqli_query($connection, "UPDATE poli SET nama = '$nama', deskripsi = '$deskripsi', loket = '$loket', id_dokter = '$id_dokter', statu = '$statu' WHERE id_poli = '$id_poli'");
 if ($query) {
   $_SESSION['info'] = [
     'status' => 'success',

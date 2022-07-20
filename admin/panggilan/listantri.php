@@ -49,7 +49,7 @@ $result = mysqli_query($connection, "SELECT * FROM antrian");
                                 $no = 1;
                                 while ($data = mysqli_fetch_array($poli)) :
                                 ?>
-                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                    <input type="hidden" name="id" value="<?= $data['id'] ?>">
                                     <tr class="text-center">
                                         <td><?= $no ?></td>
                                         <td><?= $data['no_antrian'] ?></td>
@@ -57,10 +57,7 @@ $result = mysqli_query($connection, "SELECT * FROM antrian");
                                         <td><?= $data['status'] ?></td>
                                         <td><?= $data['nama_poli'] ?></td>
                                         <td>
-                                            <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?id=<?= $data['id'] ?>">
-                                                <i class="fas fa-trash fa-fw"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-info" href="edit.php?id=<?= $pol['id'] ?>">
+                                            <a class="btn btn-sm btn-info" href="edit.php?id=<?= $data['id'] ?>">
                                                 <i class="fas fa-edit fa-fw"></i>
                                             </a>
                                         </td>

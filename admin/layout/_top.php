@@ -31,6 +31,121 @@ isLogin();
   <!-- Template CSS -->
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
+  <style>
+    /* panggilan selanjutnya */
+    .container-antrian-selanjutnya {
+      width: 100%;
+      height: 30rem;
+      border-radius: 5px;
+      /* background-color: salmon; */
+    }
+
+    .bg-title-selanjutnya {
+      width: 100%;
+      background-color: #65C18C;
+      color: #fff;
+      text-align: center;
+      padding-top: .5rem;
+    }
+
+    .box-nomor-selanjutnya {
+      display: flex;
+      width: 100%;
+      height: 14rem;
+      margin: 0 auto;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      justify-content: center;
+      background: #C1F4C5;
+      border-radius: 5px;
+    }
+
+    .box-nomor-selanjutnya h2 {
+      font-size: 6rem;
+      color: #000;
+    }
+
+    .bg-sisa-antrian {
+      display: flex;
+      width: 100%;
+      height: 15%;
+      margin: 0 auto;
+      margin-top: 2rem;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30rem;
+      background-color: #65C18C;
+      color: #fff;
+    }
+
+    .bg-sisa-antrian h2 {
+      font-size: 1.7rem;
+    }
+
+    /* panggilan */
+    .container-panggil-antrian {
+      width: 100%;
+      height: 30rem;
+      border-radius: 5px;
+      /* background-color: green; */
+    }
+
+    .bg-title-panggilan {
+      width: 100%;
+      background-color: #65C18C;
+      color: #fff;
+      text-align: center;
+      padding-top: .5rem;
+    }
+
+    .box-nomor {
+      display: flex;
+      width: 100%;
+      height: 14rem;
+      margin: 0 auto;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      top: 10%;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      background: #C1F4C5;
+      border-radius: 5px;
+    }
+
+    .box-nomor h2 {
+      font-size: 6rem;
+      color: #000;
+    }
+
+    .button-panggilan {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      margin: 0 auto;
+    }
+
+    .button-panggilan button {
+      width: 7rem;
+      height: 4rem;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      padding: auto;
+    }
+
+    .button-panggilan button:nth-child(2) {
+      background-color: #787878;
+      border-radius: 2px;
+      color: #fff;
+      border: none;
+    }
+
+    .button-panggilan button:nth-child(2):hover {
+      background-color: #707070;
+    }
+  </style>
+
 </head>
 
 <body>

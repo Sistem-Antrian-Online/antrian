@@ -11,8 +11,9 @@ $nama = $_POST['nama'];
 $deskripsi = $_POST['deskripsi'];
 $loket = $_POST['loket'];
 $id_dokter = $_POST['id_dokter'];
+$statu = $_POST['statu'];
 
-$query = mysqli_query($connection, "insert into poli (id_poli, nama, deskripsi, loket, id_dokter) value('$no', '$nama', '$deskripsi', '$loket', '$id_dokter')");
+$query = mysqli_query($connection, "insert into poli (id_poli, nama, deskripsi, loket, id_dokter, statu) value('$no', '$nama', '$deskripsi', '$loket', '$id_dokter', '$statu')");
 if ($query) {
   $_SESSION['info'] = [
     'status' => 'success',

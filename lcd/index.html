@@ -7,69 +7,67 @@
     <title>Antrian Rumah Sakit Online</title>
     <link rel="stylesheet" href="asset/css/font.css" />
     <link rel="stylesheet" href="asset/css/style2.css" />
-    <link rel="stylesheet" href="asset/css/owl.carousel.min.css" />
+    <!-- <link rel="stylesheet" href="asset/css/owl.carousel.min.css" /> -->
   </head>
   <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparant">
+    <nav class="navbar navbar-expand-lg navbar-light shadow" style="height: 60px; background-color: #c1f4c5; padding: 50px">
       <div class="container-fluid">
-        <div class="navbar-brand text-bold text-white">
-          <img src="asset/img/logo-2.png" alt="" width="40" class="d-inline-block" />
-          <img src="asset/img/logo-3.png" alt="" width="120" class="d-inline-block" />
-        </div>
-        <div>
-          <div class="waktu-tgl text-bold text-white btn btn-info"></div>
+        <a class="navbar-brand d-flex" href="#">
+          <img src="asset/img/logo-2.png" alt="logo-rsud" width="85" height="85" />
+          <div class="ms-2 title-logo">
+            <span style="font-weight: 500; font-size: 22px">RSUD JOMBANG</span> <br />
+            <span style="font-size: 16.9px">Jl. KH. Wahid Hasyim No.52, Jombang</span> <br />
+            <span style="font-size: 16.9px"> Telp. (0321) 863502</span>
+          </div>
+        </a>
+        <div class="time-date">
+          <span class="time" style="font-size: 24px; font-weight: 500"></span><br />
+          <span class="tgl"></span>
         </div>
       </div>
     </nav>
-    <!-- akhir navbar -->
 
-    <!-- content -->
-    <div class="container-fluid mt-2">
-      <div class="row content">
-        <div class="col-xl-6 col-sm-4">
+    <!-- content panggilan -->
+    <div class="container-fluid" style="margin-top: 20px">
+      <div class="row">
+        <div class="col-5">
+          <div class="title-panggilan position-relative">
+            <h3 class="position-absolute start-50 top-50 translate-middle text-white">NOMOR ANTRIAN</h3>
+          </div>
+          <div class="nomor-antrian position-relative">
+            <h3 class="position-absolute start-50 top-50 translate-middle text-white" id="nomor">B001</h3>
+          </div>
+          <div class="title-poli position-relative">
+            <h3 class="position-absolute start-50 top-50 translate-middle text-white" id="poli">Poli Jantung</h3>
+          </div>
+        </div>
+        <div class="col-7">
           <video class="shadow-sm" muted autoplay loop>
             <source src="asset/vid/vid-rs.mp4" />
           </video>
         </div>
-        <div class="col-xl-6 col-sm-4">
-          <div class="panggilan-antrian shadow rounded position-relative">
-            <img src="asset/img/icon.png" class="position-absolute start-50 top-50 translate-middle" />
-            <div class="bg-loket position-relative">
-              <p class="position-absolute start-50 top-50 translate-middle loket"></p>
-            </div>
-            <div class="bg-nomor position-relative">
-              <p class="position-absolute start-50 top-50 translate-middle text-info nomor"></p>
-            </div>
-            <div class="bg-poli position-relative">
-              <p class="position-absolute start-50 top-50 translate-middle poli"></p>
-            </div>
-          </div>
-        </div>
       </div>
+      <hr />
     </div>
-    <!-- akhir content -->
 
-    <!-- data antrian poli -->
-    <div class="container-fluid" style="margin-top: -50px">
-      <div class="data-antrian owl-carousel" id="bacadata" style="display: flex"></div>
+    <!-- daftar informasi antrian yang dilayani -->
+    <div class="container-fluid">
+      <div class="owl-carousel" style="display: flex; justify-content: space-around"></div>
     </div>
-    <!-- akhir data antrian poli -->
 
     <!-- footer -->
-    <footer style="margin-top: 1rem">
-      <div class="col-md-12 text-white p-3" style="background-color: black; letter-spacing: 5px">
-        <marquee behavior="" direction="">SELAMAT DATANG DI RSUD JOMBANG JL. KH. Wahid Hasyim No.52, Kepanjen, Kec. Jombang, Kabupaten Jombang Jawa Timur 61416 </marquee>
-      </div>
+    <footer class="container-fluid">
+      <hr />
+      <span style="font-size: 15px; color: #fff; font-weight: 400">&copy; Copyright RSUD JOMBANG</span>
     </footer>
-    <!-- akhir footer -->
 
     <script src="asset/js/jquery-3.6.0.js"></script>
     <script src="asset/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="asset/js/owl.carousel.min.js"></script>
+    <!-- <script src="asset/js/owl.carousel.min.js"></script> -->
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
-    <script type="module">
+    <script>
       function showTime() {
         let hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum&#39;at", "Sabtu"];
         let bulan = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
@@ -99,14 +97,14 @@
         s = s < 10 ? "0" + s : s;
         var time = h + ":" + m + ":" + s + " " + session;
 
-        // console.log(Hari+", "+day+' '+Bulan+" "+Tahun+" "+time);
-        let hariTgl = Hari + ", " + date2 + " " + Bulan + " " + Tahun + " " + time;
-        $(".waktu-tgl").html(hariTgl);
+        var tgl = Hari + ", " + date2 + " " + Bulan + " " + Tahun;
+
+        $(".time").html(time);
+        $(".tgl").html(tgl);
+
         setTimeout(showTime, 1000);
       }
       showTime();
-
-      var bacadata = document.getElementById("bacadata");
 
       const firebaseConfig = {
         apiKey: "AIzaSyBcj1h4Z0EHIYyuh9dEzbLnrfhnuvCUOaI",
@@ -121,52 +119,38 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       var db = firebase.database();
-      var antrianFR = db.ref("antrian_dilayani");
+      var antrianFR = db.ref("antrian_dilayani").orderByChild("nama_poli").limitToFirst(5);
+      var panggilanFR = db.ref("panggilan");
 
-      // baca data firebase
       antrianFR.on("value", bacaData);
-
       function bacaData(snap) {
         let card = "";
-
+        console.log(snap.val());
         snap.forEach((kolom) => {
-          let loket = kolom.val().loket;
           let poli = kolom.val().nama_poli;
           let nomor = kolom.val().nomor_dilayani;
           let status = kolom.val().status;
 
-          card += `<div id="antrian" class="shadow rounded position-relative">
-                  <img src="asset/img/icon.png" alt="icon" class="position-absolute" />
-                  <div class="bg-antrian-poli position-relative text-white">
-                    <p class="position-absolute start-50 top-50 translate-middle">${poli}</p>
-                  </div>
-                  <div class="bg-nomor-antrian position-relative text-info">
-                    <p class="position-absolute start-50 top-50 translate-middle">${nomor}</p>
-                    <p class="position-absolute start-50 top-100 translate-middle">${status}</p>
-                  </div>
-                </div>`;
+          card +=
+            "<div class='card text-center' style='margin-left: 20px; margin-right: 20px;'><div class='card-header'>" +
+            poli +
+            "</div><div class='card-body position-relative'><span class='position-absolute start-50 top-50 translate-middle'>" +
+            nomor +
+            "</span></div><div class='card-footer'>" +
+            status +
+            "</div></div>";
         });
-        bacadata.innerHTML = card;
-        $(".data-antrian").owlCarousel({
-          autoplay: true,
-          loop: true,
-          itemsDesktop: [1199, 3],
-        });
+        $(".owl-carousel").html(card);
       }
 
-      var panggilanFR = db.ref("panggilan");
-      panggilanFR.on("value", panggilan);
-      // panggilan
-      function panggilan(snap) {
-        let loket = snap.val().loket;
+      panggilanFR.on("value", panggilanData);
+      function panggilanData(snap) {
         let nomor = snap.val().nomor;
-        let poli = snap.val().poli;
+        let nama_poli = snap.val().nama_poli;
 
-        $(".loket").html("Loket " + loket);
-        $(".nomor").html(nomor);
-        $(".poli").html(poli);
+        $("#nomor").html(nomor);
+        $("#poli").html(nama_poli);
       }
-      panggilan();
     </script>
   </body>
 </html>

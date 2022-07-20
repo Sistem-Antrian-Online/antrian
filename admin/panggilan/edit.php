@@ -38,8 +38,8 @@ $query = mysqli_query($connection, "SELECT * FROM antrian WHERE id='$id'");
                   <td>
                     <select class="form-control" name="status" id="status" required>
                       <option value="Belum">--Pilih Status--</option>
-                      <option value="Sudah">Sudah</option>
-                      <option value="Proses">Proses</option>
+                      <option value="Selesai">Selesai</option>
+                      <option value="Lewati">Lewati</option>
                       <option value="Belum">Belum</option>
                     </select>
                   </td>

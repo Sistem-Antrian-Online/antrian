@@ -1,17 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 
 @font-face {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: local('Material Icons'), local('MaterialIcons-Regular'),
-    url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
-    url(../fonts/MaterialIcons-Regular.woff) format('woff'),
-    url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url(../fonts/MaterialIcons-Regular.woff2) format("woff2"), url(../fonts/MaterialIcons-Regular.woff) format("woff"), url(../fonts/MaterialIcons-Regular.ttf) format("truetype");
 }
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 24px; /* Preferred icon size */
@@ -32,20 +29,18 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Support for IE. */
-  font-feature-settings: 'liga';
+  font-feature-settings: "liga";
 }
 
 @font-face {
-  font-family: 'Framework7 Icons';
+  font-family: "Framework7 Icons";
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/Framework7Icons-Regular.woff2') format('woff2'),
-    url('../fonts/Framework7Icons-Regular.woff') format('woff'),
-    url('../fonts/Framework7Icons-Regular.ttf') format('truetype');
+  src: url("../fonts/Framework7Icons-Regular.woff2") format("woff2"), url("../fonts/Framework7Icons-Regular.woff") format("woff"), url("../fonts/Framework7Icons-Regular.ttf") format("truetype");
 }
 
 .f7-icons {
-  font-family: 'Framework7 Icons';
+  font-family: "Framework7 Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 28px;
@@ -59,13 +54,13 @@
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-font-feature-settings: 'liga';
-  -moz-font-feature-settings: 'liga=1';
-  -moz-font-feature-settings: 'liga';
-  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
 }
-.md:not([class*='color-theme']) {
+.md:not([class*="color-theme"]) {
   --f7-theme-color: #6200ee;
   --f7-theme-color-rgb: 98, 0, 238;
   --f7-theme-color-shade: #5100c5;
@@ -170,20 +165,16 @@ div.demo-lazy {
 }
 
 /* Demo Messagebar */
-.ios
-  .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible)
-  a.demo-send-message-link {
+.ios .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible) a.demo-send-message-link {
   pointer-events: none;
   color: #8e8e8e;
 }
-.md
-  .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible)
-  a.demo-send-message-link {
+.md .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible) a.demo-send-message-link {
   pointer-events: none;
   opacity: 0.5;
 }
 /* Grid demo */
-.grid-demo div[class*='col'] {
+.grid-demo div[class*="col"] {
   background: #fff;
   text-align: center;
   color: #000;
@@ -195,7 +186,7 @@ div.demo-lazy {
 .grid-resizable-demo {
   --f7-grid-row-gap: 16px;
 }
-.grid-resizable-demo div[class*='col'] {
+.grid-resizable-demo div[class*="col"] {
   margin-bottom: 0;
 }
 .grid-resizable-demo .demo-col-center-content {
@@ -203,7 +194,7 @@ div.demo-lazy {
   align-items: center;
   justify-content: center;
 }
-.theme-dark .grid-demo div[class*='col'] {
+.theme-dark .grid-demo div[class*="col"] {
   background-color: #000;
   color: #fff;
   border-color: #444;
@@ -261,7 +252,7 @@ div.demo-lazy {
 }
 .ios .panel-right.panel-in ~ .view-main:after,
 .ios .panel-right.panel-out ~ .view-main:after {
-  content: '';
+  content: "";
   height: 100%;
   width: 1px;
   position: absolute;
@@ -276,7 +267,7 @@ div.demo-lazy {
 }
 
 .ios .panel-left:after {
-  content: '';
+  content: "";
   height: 100%;
   width: 1px;
   position: absolute;
@@ -545,7 +536,7 @@ code {
   border-bottom: 1px solid transparent;
 }
 .demo-bars-picker .demo-navbar:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 10px;
   width: 20px;
@@ -554,7 +545,7 @@ code {
   margin-top: -5px;
 }
 .demo-bars-picker .demo-navbar:after {
-  content: '';
+  content: "";
   position: absolute;
   right: 10px;
   width: 20px;
@@ -653,7 +644,7 @@ code {
   z-index: 10;
 }
 .swipe-handler:after {
-  content: '';
+  content: "";
   width: 36px;
   height: 6px;
   position: absolute;

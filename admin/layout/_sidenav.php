@@ -59,8 +59,6 @@
                     $id_poli = $data['id_poli'];
                     $statu = $data['statu'];
                     if ($statu == 1) {
-
-
                 ?>
                         <li class="dropdown">
                             <a href="" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bell"></i>

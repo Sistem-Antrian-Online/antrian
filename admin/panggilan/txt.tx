@@ -1,0 +1,255 @@
+    $id = $_GET['id'];
+    $poli = $_GET['poli'];
+    $loket = $_GET['loket'];
+    $nomor = $_GET['nomor'];
+
+
+    // antrian 
+    $sql = "SELECT *, MIN(no_antrian) AS antrian FROM antrian WHERE status = 'Belum' AND no_antrian LIKE '%$loket%' AND id_poli = '$id_poli' LIMIT 1";
+    $query = mysqli_query($connection, $sql);
+    $data = mysqli_fetch_array($query);
+    $antrian = isset($data['antrian']) ? $data['antrian'] : '000'; 
+
+
+
+
+    $antrian_lanjut = "UPDATE antrian SET status = 'Dilayani' WHERE no_antrian = '$nomor'";
+    mysqli_query($connection, $antrian_lanjut);
+
+    header("Location:panggilan.php?id=$id&poli=$poli&loket=$loket");
+
+    $antrian_selesai = "UPDATE antrian SET status = 'Selesai' WHERE status = 'Dilayani' AND no_antrian = (SELECT MIN(no_antrian) FROM antrian  WHERE id_poli = $id)";
+    mysqli_query($connection, $antrian_selesai);
+    
+    
+    
+    
+    
+    
+    
+    // antrian selanjutnya & sisa antrian
+    $sql = "SELECT *, COUNT(SUBSTR(no_antrian, 1)) AS sisa_antrian, MIN(no_antrian) AS nomor_selanjutnya FROM antrian WHERE STATUS = 'Belum' AND no_antrian LIKE '%$loket_poli%' ORDER BY id ASC LIMIT 1";
+    $query = mysqli_query($connection, $sql);
+    $data = mysqli_fetch_array($query);
+
+    // nomor antrian selanjutnya
+    $nomor_selanjutnya = isset($data['nomor_selanjutnya']) ? $data['nomor_selanjutnya'] : $loket_poli.'000';
+
+    // sisa antrian pasien poli
+    $sisa_antrian_poli = isset($data['sisa_antrian']) ? $data['sisa_antrian'] : '0';
+    
+    // panggilan
+    $sql2 = "SELECT *, MAX(no_antrian) AS nomor_panggilan FROM antrian WHERE STATUS = 'Melayani' AND no_antrian LIKE '%$loket_poli%' LIMIT 1";
+    $query2 = mysqli_query($connection, $sql2);
+    $data2 = mysqli_fetch_array($query2);
+
+    // panggilan ketika dilayani
+    $nomor_panggilan_dilayani = isset($data2['nomor_panggilan']) ? $data2['nomor_panggilan'] : $loket_poli.'---';
+
+
+    <button class="btn btn-secondary text-center" onclick="lewati(this)" data-antrian="<?= $nomor_panggilan_dilayani ?>">
+        <span>Lewati</span>
+    </button>
+    <button class="btn btn-warning text-center" data-loket="<?= $loket_poli; ?>" data-nomor="<?= $nomor_panggilan_dilayani ?>" data-poli="<?= $poli; ?>" onclick="panggil(this)">
+        <span>Panggil</span>
+    </button>                           
+    <!-- <button class="btn btn-success text-center" onclick="selesai(this)" data-nomor="<?= $nomor_panggilan_dilayani ?>">
+        <span>Selesai</span>
+    </button>                            -->
+
+
+
+
+
+
+
+
+
+
+    
+    /*
+        menghubungkan firebase untuk menampilkan informasi 
+        antrian dilayani saat ini LCD sama Mobile
+    */    
+    const firebaseConfig = {
+        apiKey: "AIzaSyBcj1h4Z0EHIYyuh9dEzbLnrfhnuvCUOaI",
+        authDomain: "antrian-online-97d3b.firebaseapp.com",
+        projectId: "antrian-online-97d3b",
+        storageBucket: "antrian-online-97d3b.appspot.com",
+        messagingSenderId: "933345432664",
+        appId: "1:933345432664:web:fa8d54fdcb900c168de62d",
+        measurementId: "G-VDK4EVDDZX",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+
+
+    // btn panggilan
+    function panggil(el) {
+        event.preventDefault();
+        var bel = document.getElementById('bel');
+        let loket = $(el).data('loket');
+        let nomor = $(el).data('nomor');
+        let poli = $(el).data('poli')
+        let textNomor = nomor.split('').join(', ');
+
+        bel.play();    
+        
+        db.ref('panggilan').set({
+            loket: loket,
+            nomor: nomor,
+            poli: poli,
+        });
+
+        var panggilan = "Panggilan Nomor Antrian, " + textNomor + ", Silahkan Menuju Ke Loket, " + loket + ",";
+        // alert(panggilan);
+        setTimeout(() => {
+            responsiveVoice.speak(panggilan, 'Indonesian Female', {
+                pitch: 1,
+                rate: 1,
+                volume: 1
+            });
+        }, 8100);
+    }
+
+
+     // btn lewati 
+    function lewati(el) {
+        let nomorSaatIni = $(el).data('antrian');
+        $.ajax({
+            url: 'nomorlewati.php',
+            type: 'POST',
+            data: {nomor: nomorSaatIni},
+            cache: false,
+            success: (data) => {
+                alert('Nomor Antrian Dilewati');
+                console.log(data);
+            },
+        });
+    }
+    
+    // btn selesai 
+    function selesai(el) {
+        let nomorSaatIni = $(el).data('nomor');
+        $.ajax({
+            url: 'nomorselesai.php',
+            type: 'POST',
+            data: {nomor: nomorSaatIni},
+            cache: false,
+            success: (data) => {
+                alert('Nomor Antrian Selesai');
+                console.log(data);
+            },
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    /*
+        menghubungkan firebase untuk menampilkan informasi 
+        antrian dilayani saat ini LCD sama Mobile
+    */    
+    const firebaseConfig = {
+        apiKey: "AIzaSyBcj1h4Z0EHIYyuh9dEzbLnrfhnuvCUOaI",
+        authDomain: "antrian-online-97d3b.firebaseapp.com",
+        projectId: "antrian-online-97d3b",
+        storageBucket: "antrian-online-97d3b.appspot.com",
+        messagingSenderId: "933345432664",
+        appId: "1:933345432664:web:fa8d54fdcb900c168de62d",
+        measurementId: "G-VDK4EVDDZX",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+
+
+    // btn panggilan
+    function panggil(el) {
+        let nomor = $(el).data('nomor');
+        alert(nomor);
+
+        // bel.play();    
+    }
+
+<!-- 
+    <audio id="bel">
+        <source src="audio/bel.mp3" type="audio/mpeg">
+    </audio>            
+
+    <audio id="perhatian">
+        <source src="audio/Perhatian.m4a" type="audio/x-m4a">
+    </audio>
+
+    <audio id="huruf">
+        <source src="audio/<?= substr($nomor_antrian, 0, 1); ?>.m4a" type="audio/x-m4a">
+    </audio>
+
+    <audio id="audio1">
+        <source src="audio/<?= substr($nomor_antrian, 1, 1); ?>.m4a" type="audio/x-m4a">
+    </audio>
+
+    <audio id="audio2">
+        <source src="audio/<?= substr($nomor_antrian, 2, 1); ?>.m4a" type="audio/x-m4a">
+    </audio>
+
+    <audio id="audio3">
+        <source src="audio/<?= substr($nomor_antrian, 3, 1); ?>.m4a" type="audio/x-m4a">
+    </audio>
+
+    <audio id="tujuan">
+        <source src="audio/Tujuan.m4a" type="audio/x-m4a">
+    </audio>
+
+    <audio id="loket">
+        <source src="audio/<?= $loket ?>.m4a" type="audio/x-m4a">
+    </audio> -->
+
+    // btn panggilan
+    function panggil(el) {
+        event.preventDefault();
+        var bel = document.getElementById('bel');
+        let poli = $('#poli').data('poli');
+        let nomor = $(el).data('nomor');
+        let nomor2 = nomor.slice(1);
+        let textNomor = nomor2.split('').join(', ');
+        let perhatian = document.getElementById('perhatian');
+        let audio_huruf = document.getElementById('huruf');
+        let audio_nomor1 = document.getElementById('audio1');
+        let audio_nomor2 = document.getElementById('audio2');
+        let audio_nomor3 = document.getElementById('audio3');
+        let audio_loket = document.getElementById('loket');
+        let audio_tujuan = document.getElementById('tujuan');
+
+        bel.play();    
+        setTimeout(() => {perhatian.play()}, 8100);
+        setTimeout(() => {audio_huruf.play()}, 9900);
+        setTimeout(() => {audio_nomor1.play()}, 11000);
+        setTimeout(() => {audio_nomor2.play()}, 12000);
+        setTimeout(() => {audio_nomor3.play()}, 13000);
+        setTimeout(() => {audio_tujuan.play()}, 14000);
+        setTimeout(() => {audio_loket.play()}, 16000);
+        
+        db.ref('panggilan').set({
+            loket: loket,
+            nomor: nomor,
+            poli: poli,
+            status: 'Sedang Melayani'
+        });
+        
+    }
