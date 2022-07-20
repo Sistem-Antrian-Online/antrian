@@ -20,6 +20,7 @@ $antrian_dilayani = $data2['antrian_panggil'];
 
 <section class="section" data-id="<?= $id_poli ?>" data-loket="<?= $loket ?>" data-poli="<?= $poli; ?>" data-nomor_belum="<?= $antrian_belum; ?>">
     <div class="section-header d-flex justify-content-between">
+        <input type="hidden" name="id_poli" id="id_poli" value="<?= $id_poli ?>">
         <h2 id="poli" data-poli="<?= $poli ?>"><?= $poli ?></h2>
         <a href="index.php" class="btn btn-danger">Kembali</a>
     </div>
@@ -190,13 +191,25 @@ $antrian_dilayani = $data2['antrian_panggil'];
 
     function tutup() {
         let nomor_dilayani = $('button:nth-child(2)').data('nomor');
+        let id_poli = $(`#id_poli`).val();
         alert('Status Tidak Beroperasi');
         db.ref('antrian_dilayani/' + id).set({
             loket: loket,
             nama_poli: poli,
             nomor_dilayani: '---',
             status: 'Tidak Beroperasi'
-        })
+        });
+        $.ajax({
+            url: 'editoperate.php',
+            type: 'POST',
+            data: {
+                id_poli: id_poli,
+            },
+            cache: false,
+            success: (data) => {
+                location.reload(true);
+            }
+        });
     }
 
 
