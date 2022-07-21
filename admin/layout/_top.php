@@ -31,7 +31,9 @@ isLogin();
   <!-- Template CSS -->
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../panggilan/sweetalert/sweetalert2.min.css">
   <style>
+    
     /* panggilan selanjutnya */
     .container-antrian-selanjutnya {
       width: 100%;
@@ -119,14 +121,15 @@ isLogin();
       color: #000;
     }
 
+   
     .button-panggilan {
       display: flex;
-      width: 100%;
+      width: 35rem;
       justify-content: space-around;
       margin: 0 auto;
     }
 
-    .button-panggilan button {
+    .button-panggilan button{
       width: 7rem;
       height: 4rem;
       margin: 0 auto;
@@ -134,15 +137,28 @@ isLogin();
       padding: auto;
     }
 
-    .button-panggilan button:nth-child(2) {
-      background-color: #787878;
+    .button-panggilan2 button{
+      background-color:	#787878;
       border-radius: 2px;
       color: #fff;
       border: none;
     }
 
-    .button-panggilan button:nth-child(2):hover {
+    .button-panggilan2 button:hover{
       background-color: #707070;
+      transition: .3s;
+    }
+
+    .button-panggilan3 button{
+      background-color:	#6777EF;
+      border-radius: 2px;
+      color: #fff;
+      border: none;
+    }
+
+    .button-panggilan3 button:hover{
+      background-color: #4A57B6;
+      transition: .3s;
     }
   </style>
 

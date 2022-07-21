@@ -2,8 +2,6 @@
 require_once '../layout/_top.php';
 require_once '../helper/connection.php';
 $query = mysqli_query($connection, 'SELECT * FROM poli');
-
-// id= $id_poli poli= $poli loket= $loket 
 ?>
 
 <section class="section">
