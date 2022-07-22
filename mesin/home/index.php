@@ -93,8 +93,10 @@ require_once '../../admin/helper/connection.php';
 <script src="../assets/js/jquery-3.6.0.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/recta/dist/recta.js"></script>
 <script>
 //-----KONFIGURASI FIREBASE-----
+var printer = new Recta('123456789', '1811')
 
 const firebaseConfig = {
     apiKey: "AIzaSyBcj1h4Z0EHIYyuh9dEzbLnrfhnuvCUOaI",
@@ -120,7 +122,22 @@ function update(el) {
     let status = $(el).data("status");
     let statu = $(el).data("statu");
 
-    if (date_check.getHours() >= "7" && date_check.getHours() <= "11") {
+    arrbulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
+        "Oktober",
+        "November", "Desember"
+    ];
+    date = new Date();
+    millisecond = date.getMilliseconds();
+    detik = date.getSeconds();
+    menit = date.getMinutes();
+    jam = date.getHours();
+    hari = date.getDay();
+    tanggal = date.getDate();
+    bulan = date.getMonth();
+    tahun = date.getFullYear();
+
+
+    if (date_check.getHours() >= "0" && date_check.getHours() <= "16") {
         if (statu != "2") {
             if (confirm('Yakin?') == true) {
                 $.ajax({
@@ -141,10 +158,30 @@ function update(el) {
                                 if (error) {
                                     alert("Gagal");
                                 } else {
-                                    window.open(
-                                        `cetak.php?poli=${poli}&antri=${noantri}&loket=${loket}`,
-                                        'print karcis',
-                                        "width=500,height=500");
+                                    printer.open().then(function() {
+                                        printer.align('center')
+                                            .text("RSUD JOMBANG\n")
+                                            .bold(true)
+                                            .font('A')
+                                            .mode('A', true, true, true, false)
+                                            .text('Loket ' + loket)
+                                            .underline(true)
+                                            .text(noantri + '\n')
+                                            .underline(false)
+                                            .mode('B', false, false, false, false)
+                                            .bold(true)
+                                            .text('POLI ' + poli + '\n')
+                                            .bold(false)
+                                            .underline(false)
+                                            .text(tanggal + " " + arrbulan[bulan] +
+                                                " " +
+                                                tahun + " " + jam + ":" + menit + ":" +
+                                                detik + '\n')
+                                            .barcode('code39', noantri)
+                                            .cut()
+                                            .print()
+                                    })
+
                                     window.location = "";
                                 }
                             });
